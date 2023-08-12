@@ -28,11 +28,8 @@ jobs:
         aws configure set default.region $AWS_REGION
 
     - name: Generate speeches
-      run: |
-        ls -R
-        sh /home/runner/work/audio/audio/script/generate_upload.sh
-        ls -R
-        
+      run: sh /home/runner/work/audio/audio/script/generate_upload.sh
+
 
 #
 #    - name: Upload to s3

@@ -66,6 +66,8 @@ generate_speech() {
 
 generate_speech
 
+ls -R
+echo "The index_value is: ${index_value}"
 
 upload_files() {
     aws s3 cp $prefix/index.csv s3://everyday-story/index.csv
@@ -77,4 +79,4 @@ upload_files() {
     aws s3api put-object-tagging --bucket $bucket_name --key story/"$index_value"_french.mp3 --tagging 'TagSet=[{Key=language,Value=french}, {Key=scope,Value=成语}]'
 }
 
-#upload_files
+upload_files
