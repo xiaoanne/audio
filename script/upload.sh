@@ -1,5 +1,5 @@
 
-prefix="../s3"
+prefix="/home/runner/work/audio/audio/s3"
 
 function upload_files() {
     aws s3 cp $prefix/index.csv s3://everyday-story/index.csv
