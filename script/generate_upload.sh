@@ -4,7 +4,7 @@
 #rm ../s3/story/*.json
 
 title="亡羊补牢为时未晚"
-title_english="It's never too late to mend"
+title_english="\"It's never too late to mend.\""
 bucket_name='everyday-story'
 csv_key='/home/runner/work/audio/audio/s3/index.csv'
 prefix="/home/runner/work/audio/audio/s3"
