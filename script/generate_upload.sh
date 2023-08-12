@@ -77,4 +77,4 @@ upload_files() {
     aws s3api put-object-tagging --bucket $bucket_name --key story/"$index_value"_french.mp3 --tagging 'TagSet=[{Key=language,Value=french}, {Key=scope,Value=成语}]'
 }
 
-upload_files
+#upload_files
