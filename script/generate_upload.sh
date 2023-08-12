@@ -6,9 +6,9 @@
 #title="满招损谦受益"
 #title_english="IPride brings loss, humility brings gain"
 bucket_name='everyday-story'
-csv_key='/home/runner/work/audio/audio/s3/index.csv'
-prefix="/home/runner/work/audio/audio/s3"
-file_path="/home/runner/work/audio/audio/script/story_original.txt"
+s3_object_prefix="/home/runner/work/audio/audio"
+file_path=$s3_object_prefix"/script/story_original.txt"
+csv_key=$s3_object_prefix"/s3/index.csv"
 title=$(head -n 1 "$file_path")
 title_english=$(sed -n '2p' "$file_path")
 story_chinese=$(sed -n '3p' "$file_path")
@@ -46,7 +46,8 @@ create_json_file() {
     }'
 
     # Write the JSON content to the file
-    echo "$meta_content" > "/home/runner/work/audio/audio/s3/story/"$story_name_metadata".json"
+    echo "$meta_content" > $s3_object_prefix"/s3/story/"$story_name_metadata".json"
+#    echo "$meta_content" > "/home/runner/work/audio/audio/s3/story/"$story_name_metadata".json"
     echo "Generated the metadata json file."
 }
 create_json_file
@@ -55,9 +56,9 @@ create_json_file
 
 generate_speeches() {
     echo "Generating story speeches."
-    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 /home/runner/work/audio/audio/s3/story/"$index_value"_chinese.mp3
-    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 /home/runner/work/audio/audio/s3/story/"$index_value"_english.mp3
-    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 /home/runner/work/audio/audio/s3/story/"$index_value"_french.mp3
+    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 $s3_object_prefix/s3/story/${story_name_chinese}.mp3
+    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 $s3_object_prefix/s3/story/${story_name_english}.mp3
+    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 $s3_object_prefix/s3/story/${story_name_french}.mp3
 }
 generate_speeches
 
@@ -65,10 +66,10 @@ generate_speeches
 
 upload_files() {
     aws s3 cp $prefix/index.csv s3://everyday-story/index.csv
-    aws s3 cp $prefix/story/${index_value}_meta.json s3://everyday-story/story/${story_name_metadata}.json
-    aws s3 cp $prefix/story/${index_value}_chinese.mp3 s3://everyday-story/story/${story_name_chinese}.mp3
-    aws s3 cp $prefix/story/${index_value}_english.mp3 s3://everyday-story/story/${story_name_english}.mp3
-    aws s3 cp $prefix/story/${index_value}_french.mp3 s3://everyday-story/story/${story_name_french}.mp3
+    aws s3 cp $prefix/story/${story_name_metadata}.json s3://everyday-story/story/${story_name_metadata}.json
+    aws s3 cp $prefix/story/${story_name_chinese}.mp3 s3://everyday-story/story/${story_name_chinese}.mp3
+    aws s3 cp $prefix/story/${story_name_english}.mp3 s3://everyday-story/story/${story_name_english}.mp3
+    aws s3 cp $prefix/story/${story_name_french}.mp3 s3://everyday-story/story/${story_name_french}.mp3
     aws s3api put-object-tagging --bucket $bucket_name --key story/${story_name_metadata}.json --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}, {Key=metadata,Value=yes}]'
     aws s3api put-object-tagging --bucket $bucket_name --key story/${story_chinese}.mp3 --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
     aws s3api put-object-tagging --bucket $bucket_name --key story/${story_english}.mp3 --tagging 'TagSet=[{Key=language,Value=english}, {Key=scope,Value=成语}]'
