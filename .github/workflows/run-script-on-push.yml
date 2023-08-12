@@ -29,6 +29,7 @@ jobs:
 
     - name: Run Script
       run: |
+        pwd
         ls -lr
         sh ./script/generate_speech.sh
         sh ./script/upload.sh
