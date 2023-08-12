@@ -1,7 +1,7 @@
 #!/bin/bash
 
-rm ../s3/story/*.mp3
-rm ../s3/story/*.json
+#rm ../s3/story/*.mp3
+#rm ../s3/story/*.json
 
 title="揠苗助长"
 bucket_name='everyday-story'
@@ -64,19 +64,4 @@ function generate_speech() {
     aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 ../s3/story/"$index_value"_french.mp3
 }
 
-
 generate_speech
-
-prefix="../s3"
-
-function upload_files() {
-    aws s3 cp $prefix/index.csv s3://everyday-story/index.csv
-    aws s3 cp $prefix/story/${index_value}_chinese.mp3 s3://everyday-story/story/${index_value}_chinese.mp3
-    aws s3 cp $prefix/story/${index_value}_english.mp3 s3://everyday-story/story/${index_value}_english.mp3
-    aws s3 cp $prefix/story/${index_value}_french.mp3 s3://everyday-story/story/${index_value}_french.mp3
-    aws s3api put-object-tagging --bucket $bucket_name --key story/"$index_value"_chinese.mp3 --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
-    aws s3api put-object-tagging --bucket $bucket_name --key story/"$index_value"_english.mp3 --tagging 'TagSet=[{Key=language,Value=english}, {Key=scope,Value=成语}]'
-    aws s3api put-object-tagging --bucket $bucket_name --key story/"$index_value"_french.mp3 --tagging 'TagSet=[{Key=language,Value=french}, {Key=scope,Value=成语}]'
-}
-
-upload_files

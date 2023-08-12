@@ -24,4 +24,5 @@ jobs:
     - name: Run Script
       run: |
         ls -lr
-        sh ./script/index.sh
+        sh ./script/generate_speech.sh
+        sh ./script/upload.sh
