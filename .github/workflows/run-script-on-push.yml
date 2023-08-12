@@ -1,4 +1,4 @@
-name: Run Script on Push
+name: Text to Speech
 
 on:
   push:

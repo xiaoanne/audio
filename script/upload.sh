@@ -1,4 +1,5 @@
 #!/bin/bash
+source /home/runner/work/audio/audio/script/generate_speech.sh
 
 prefix="/home/runner/work/audio/audio/s3"
 
