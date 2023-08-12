@@ -4,6 +4,7 @@
 #rm ../s3/story/*.json
 
 title="亡羊补牢为时未晚"
+title_english="It's never too late to mend"
 bucket_name='everyday-story'
 csv_key='/home/runner/work/audio/audio/s3/index.csv'
 prefix="/home/runner/work/audio/audio/s3"
@@ -15,7 +16,7 @@ get_index() {
     local day_of_year=$(date +'%j')
     local task_time=$(date +'%H:%M:%S')
     local index="${category}_${year}_${day_of_year}_${task_time}"
-    echo "$index, $title" >> "$csv_key"
+    echo "$index, $title, $title_english" >> "$csv_key"
     echo "$index"  # Return the index value
 }
 
@@ -41,6 +42,8 @@ create_json_file() {
 
     # Create the JSON content using variables
     local meta_content='{
+      "chinese_title": "'"$title"'",
+      "english_title": "'"$title_english"'",
       "index": "'"$index_value"'",
       "timestamp": "'"$(date +"%Y-%m-%d %H:%M:%S")"'",
       "story_chinese": "'"$story_chinese"'",
