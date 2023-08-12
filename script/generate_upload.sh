@@ -24,10 +24,13 @@ get_index() {
     echo "$index, $title, $title_english" >> "$csv_key"
     echo "$index"  # Return the index value
 }
-
 index_value=$(get_index)  # Call the function and capture the index value
 echo "Index value: $index_value"
 echo "Title value: $title"
+
+story_name_chinese=${index_value}_chinese_version_${title}
+story_name_english=${index_value}_english_version_${title}
+story_name_french=${index_value}_french_version_${title}
 
 create_json_file() {
     local index="$1"
@@ -49,9 +52,10 @@ create_json_file() {
     echo "$meta_content" > "/home/runner/work/audio/audio/s3/story/"$index_value"_meta.json"
     echo "Generated the metadata json file."
 }
-
 # Call the function with parameters
 create_json_file "$index_value" "$(date +"%Y-%m-%d %H:%M:%S")" "$story_chinese"
+
+
 
 generate_speeches() {
     echo "Generating story speeches."
@@ -59,19 +63,20 @@ generate_speeches() {
     aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 /home/runner/work/audio/audio/s3/story/"$index_value"_english.mp3
     aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 /home/runner/work/audio/audio/s3/story/"$index_value"_french.mp3
 }
-
 generate_speeches
+
+
 
 upload_files() {
     aws s3 cp $prefix/index.csv s3://everyday-story/index.csv
     aws s3 cp $prefix/story/${index_value}_meta.json s3://everyday-story/story/${index_value}_metadata_${title}.json
-    aws s3 cp $prefix/story/${index_value}_chinese.mp3 s3://everyday-story/story/${index_value}_chinese_version_${title}.mp3
-    aws s3 cp $prefix/story/${index_value}_english.mp3 s3://everyday-story/story/${index_value}_english_version_${title}.mp3
-    aws s3 cp $prefix/story/${index_value}_french.mp3 s3://everyday-story/story/${index_value}_french_version_${title}.mp3
+    aws s3 cp $prefix/story/${index_value}_chinese.mp3 s3://everyday-story/story/${story_name_french}.mp3
+    aws s3 cp $prefix/story/${index_value}_english.mp3 s3://everyday-story/story/${story_name_english}.mp3
+    aws s3 cp $prefix/story/${index_value}_french.mp3 s3://everyday-story/story/${story_name_french}.mp3
     aws s3api put-object-tagging --bucket $bucket_name --key story/${index_value}_metadata_${title}.json --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}, {Key=metadata,Value=yes}]'
-    aws s3api put-object-tagging --bucket $bucket_name --key story/${index_value}_chinese_version_${title}.mp3 --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
-    aws s3api put-object-tagging --bucket $bucket_name --key story/${index_value}_english_version_${title}.mp3 --tagging 'TagSet=[{Key=language,Value=english}, {Key=scope,Value=成语}]'
-    aws s3api put-object-tagging --bucket $bucket_name --key story/${index_value}_french_version_${title}.mp3 --tagging 'TagSet=[{Key=language,Value=french}, {Key=scope,Value=成语}]'
+    aws s3api put-object-tagging --bucket $bucket_name --key story/${story_chinese}.mp3 --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
+    aws s3api put-object-tagging --bucket $bucket_name --key story/${story_english}.mp3 --tagging 'TagSet=[{Key=language,Value=english}, {Key=scope,Value=成语}]'
+    aws s3api put-object-tagging --bucket $bucket_name --key story/${story_french}.mp3 --tagging 'TagSet=[{Key=language,Value=french}, {Key=scope,Value=成语}]'
 }
 
 upload_files
