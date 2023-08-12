@@ -3,12 +3,17 @@
 #rm ../s3/story/*.mp3
 #rm ../s3/story/*.json
 
-title="满招损谦受益"
-title_english="It's never too late to mend."
+#title="满招损谦受益"
+#title_english="IPride brings loss, humility brings gain"
 bucket_name='everyday-story'
 csv_key='/home/runner/work/audio/audio/s3/index.csv'
 prefix="/home/runner/work/audio/audio/s3"
-
+file_path="/home/runner/work/audio/audio/script/story_original.txt"
+title=$(head -n 1 "$file_path")
+title_english=$(sed -n '2p' "$file_path")
+story_chinese=$(sed -n '3p' "$file_path")
+story_english=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code en --query 'TranslatedText' --output text)
+story_french=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
 
 get_index() {
     local category="A"
@@ -20,20 +25,9 @@ get_index() {
     echo "$index"  # Return the index value
 }
 
-
-
 index_value=$(get_index)  # Call the function and capture the index value
-
 echo "Index value: $index_value"
 echo "Title value: $title"
-
-# Read the value from the file into a variable
-file_path="/home/runner/work/audio/audio/script/story_original.txt"
-
-story_chinese=$(cat $file_path)
-story_english=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code en --query 'TranslatedText' --output text)
-story_french=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
-
 
 create_json_file() {
     local index="$1"
@@ -53,13 +47,10 @@ create_json_file() {
 
     # Write the JSON content to the file
     echo "$meta_content" > "/home/runner/work/audio/audio/s3/story/"$index_value"_meta.json"
-
-    # Display a message
     echo "Generated the metadata json file."
 }
 
 # Call the function with parameters
-
 create_json_file "$index_value" "$(date +"%Y-%m-%d %H:%M:%S")" "$story_chinese"
 
 generate_speeches() {
