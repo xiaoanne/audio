@@ -33,10 +33,6 @@ story_name_english=${index_value}_english_version_${title}
 story_name_french=${index_value}_french_version_${title}
 
 create_json_file() {
-    local index="$1"
-    local timestamp="$2"
-    local story_chinese="$3"
-
     # Create the JSON content using variables
     local meta_content='{
       "chinese_title": "'"$title"'",
@@ -53,7 +49,7 @@ create_json_file() {
     echo "Generated the metadata json file."
 }
 # Call the function with parameters
-create_json_file "$index_value" "$(date +"%Y-%m-%d %H:%M:%S")" "$story_chinese"
+create_json_file
 
 
 
@@ -70,7 +66,7 @@ generate_speeches
 upload_files() {
     aws s3 cp $prefix/index.csv s3://everyday-story/index.csv
     aws s3 cp $prefix/story/${index_value}_meta.json s3://everyday-story/story/${index_value}_metadata_${title}.json
-    aws s3 cp $prefix/story/${index_value}_chinese.mp3 s3://everyday-story/story/${story_name_french}.mp3
+    aws s3 cp $prefix/story/${index_value}_chinese.mp3 s3://everyday-story/story/${story_name_chinese}.mp3
     aws s3 cp $prefix/story/${index_value}_english.mp3 s3://everyday-story/story/${story_name_english}.mp3
     aws s3 cp $prefix/story/${index_value}_french.mp3 s3://everyday-story/story/${story_name_french}.mp3
     aws s3api put-object-tagging --bucket $bucket_name --key story/${index_value}_metadata_${title}.json --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}, {Key=metadata,Value=yes}]'
