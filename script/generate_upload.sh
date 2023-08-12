@@ -3,7 +3,7 @@
 #rm ../s3/story/*.mp3
 #rm ../s3/story/*.json
 
-title="揠苗助长"
+title="亡羊补牢为时未晚"
 bucket_name='everyday-story'
 csv_key='/home/runner/work/audio/audio/s3/index.csv'
 prefix="/home/runner/work/audio/audio/s3"
@@ -59,17 +59,14 @@ create_json_file() {
 
 create_json_file "$index_value" "$(date +"%Y-%m-%d %H:%M:%S")" "$story_chinese"
 
-generate_speech() {
+generate_speeches() {
     echo "Generating story speeches."
     aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 /home/runner/work/audio/audio/s3/story/"$index_value"_chinese.mp3
     aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 /home/runner/work/audio/audio/s3/story/"$index_value"_english.mp3
     aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 /home/runner/work/audio/audio/s3/story/"$index_value"_french.mp3
 }
 
-generate_speech
-
-ls -R
-echo "The index_value is: ${index_value}"
+generate_speeches
 
 upload_files() {
     aws s3 cp $prefix/index.csv s3://everyday-story/index.csv
