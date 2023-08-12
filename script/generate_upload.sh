@@ -6,6 +6,8 @@
 title="揠苗助长"
 bucket_name='everyday-story'
 csv_key='/home/runner/work/audio/audio/s3/index.csv'
+prefix="/home/runner/work/audio/audio/s3"
+
 
 get_index() {
     local category="A"
