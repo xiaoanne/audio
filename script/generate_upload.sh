@@ -62,7 +62,7 @@ generate_speeches() {
 }
 generate_speeches
 
-
+ls -R
 
 upload_files() {
     aws s3 cp $prefix/index.csv s3://everyday-story/index.csv
