@@ -1,8 +1,10 @@
 #!/bin/bash
 source /home/runner/work/audio/audio/script/generate_speech.sh
-
+echo "${index_value}"
+echo "right or wrong?????"
 prefix="/home/runner/work/audio/audio/s3"
 bucket_name='everyday-story'
+
 
 upload_files() {
     aws s3 cp $prefix/index.csv s3://everyday-story/index.csv

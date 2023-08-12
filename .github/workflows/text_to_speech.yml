@@ -7,7 +7,7 @@ on:
 
 jobs:
   run-script:
-    name: Run My Script
+    name: Text to Speech
     runs-on: ubuntu-latest
 
     steps:
