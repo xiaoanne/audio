@@ -31,5 +31,5 @@ jobs:
       run: |
         pwd
         ls -lr
-        sh ./script/generate_speech.sh
-        sh ./script/upload.sh
+        sh /home/runner/work/audio/audio/script/generate_speech.sh
+        sh /home/runner/work/audio/audio/script/upload.sh

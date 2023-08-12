@@ -5,7 +5,7 @@
 
 title="揠苗助长"
 bucket_name='everyday-story'
-csv_key='../s3/index.csv'
+csv_key='/home/runner/work/audio/audio/s3/index.csv'
 
 get_index() {
     local category="A"
@@ -25,7 +25,7 @@ echo "Index value: $index_value"
 echo "Title value: $title"
 
 # Read the value from the file into a variable
-file_path="story_original.txt"
+file_path="/home/runner/work/audio/audio/script/story_original.txt"
 
 story_chinese=$(cat $file_path)
 story_english=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code en --query 'TranslatedText' --output text)
@@ -47,7 +47,7 @@ create_json_file() {
     }'
 
     # Write the JSON content to the file
-    echo "$meta_content" > "../s3/story/"$index_value"_meta.json"
+    echo "$meta_content" > "/home/runner/work/audio/audio/s3/story/"$index_value"_meta.json"
 
     # Display a message
     echo "Generated the metadata json file."
@@ -59,9 +59,9 @@ create_json_file "$index_value" "$(date +"%Y-%m-%d %H:%M:%S")" "$story_chinese"
 
 generate_speech() {
     echo "Generating story speeches."
-    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 ../s3/story/"$index_value"_chinese.mp3
-    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 ../s3/story/"$index_value"_english.mp3
-    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 ../s3/story/"$index_value"_french.mp3
+    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 /home/runner/work/audio/audio/s3/story/"$index_value"_chinese.mp3
+    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 /home/runner/work/audio/audio/s3/story/"$index_value"_english.mp3
+    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 /home/runner/work/audio/audio/s3/story/"$index_value"_french.mp3
 }
 
 generate_speech
