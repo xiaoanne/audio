@@ -46,10 +46,9 @@ create_json_file() {
     }'
 
     # Write the JSON content to the file
-    echo "$meta_content" > "/home/runner/work/audio/audio/s3/story/"${story_name_metadata}".json"
+    echo "$meta_content" > "/home/runner/work/audio/audio/s3/story/"$story_name_metadata".json"
     echo "Generated the metadata json file."
 }
-# Call the function with parameters
 create_json_file
 
 
