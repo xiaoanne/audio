@@ -7,7 +7,7 @@ title="揠苗助长"
 bucket_name='everyday-story'
 csv_key='../s3/index.csv'
 
-function get_index() {
+get_index() {
     local category="A"
     local year=$(date +'%Y')
     local day_of_year=$(date +'%j')
@@ -32,7 +32,7 @@ story_english=$(aws translate translate-text --text "$story_chinese" --source-la
 story_french=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
 
 
-function create_json_file() {
+create_json_file() {
     local index="$1"
     local timestamp="$2"
     local story_chinese="$3"
@@ -57,7 +57,7 @@ function create_json_file() {
 
 create_json_file "$index_value" "$(date +"%Y-%m-%d %H:%M:%S")" "$story_chinese"
 
-function generate_speech() {
+generate_speech() {
     echo "Generating story speeches."
     aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 ../s3/story/"$index_value"_chinese.mp3
     aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 ../s3/story/"$index_value"_english.mp3
