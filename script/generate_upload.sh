@@ -7,6 +7,7 @@
 #title_english="IPride brings loss, humility brings gain"
 bucket_name='everyday-story'
 #s3_object_prefix="./"
+echo "pwd is: $(pwd)"
 file_path="./script/story_original.txt"
 csv_key="./s3/index.csv"
 title=$(head -n 1 "$file_path")
@@ -61,7 +62,7 @@ generate_speeches() {
 }
 generate_speeches
 
-ls -R
+#ls -R
 
 upload_files() {
     aws s3 cp "./s3"/index.csv s3://everyday-story/index.csv
@@ -70,9 +71,9 @@ upload_files() {
     aws s3 cp "./s3/story/"${story_name_english}.mp3 s3://everyday-story/story/${story_name_english}.mp3
     aws s3 cp "./s3/story/"${story_name_french}.mp3 s3://everyday-story/story/${story_name_french}.mp3
     aws s3api put-object-tagging --bucket $bucket_name --key story/${story_name_metadata}.json --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}, {Key=metadata,Value=yes}]'
-    aws s3api put-object-tagging --bucket $bucket_name --key story/${story_chinese}.mp3 --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
-    aws s3api put-object-tagging --bucket $bucket_name --key story/${story_english}.mp3 --tagging 'TagSet=[{Key=language,Value=english}, {Key=scope,Value=成语}]'
-    aws s3api put-object-tagging --bucket $bucket_name --key story/${story_french}.mp3 --tagging 'TagSet=[{Key=language,Value=french}, {Key=scope,Value=成语}]'
+    aws s3api put-object-tagging --bucket $bucket_name --key story/${story_name_chinese}.mp3 --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
+    aws s3api put-object-tagging --bucket $bucket_name --key story/${story_name_english}.mp3 --tagging 'TagSet=[{Key=language,Value=english}, {Key=scope,Value=成语}]'
+    aws s3api put-object-tagging --bucket $bucket_name --key story/${story_name_french}.mp3 --tagging 'TagSet=[{Key=language,Value=french}, {Key=scope,Value=成语}]'
 }
 
 upload_files
