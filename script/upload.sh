@@ -2,7 +2,7 @@
 
 prefix="/home/runner/work/audio/audio/s3"
 
-function upload_files() {
+upload_files() {
     aws s3 cp $prefix/index.csv s3://everyday-story/index.csv
     aws s3 cp $prefix/story/${index_value}_chinese.mp3 s3://everyday-story/story/${index_value}_chinese.mp3
     aws s3 cp $prefix/story/${index_value}_english.mp3 s3://everyday-story/story/${index_value}_english.mp3
