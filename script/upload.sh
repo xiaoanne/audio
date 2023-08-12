@@ -1,3 +1,4 @@
+#!/bin/bash
 
 prefix="/home/runner/work/audio/audio/s3"
 
