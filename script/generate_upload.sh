@@ -30,11 +30,11 @@ story_name_metadata=${index_value}_metadata_${title_chinese}
 story_name_chinese=${index_value}_chinese_version_${title_chinese}
 story_name_english=${index_value}_english_version_${title_chinese}
 story_name_french=${index_value}_french_version_${title_chinese}
+languages=("chinese" "english" "french")
 
 
 
 generate_books() {
-    languages=("chinese" "english" "french")
     titles=("$title_chinese" "$title_english" "$title_english")
     stories=("$story_chinese" "$story_english" "$story_french")
     break_line=""
