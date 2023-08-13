@@ -40,13 +40,16 @@ generate_books() {
     stories=("$story_chinese" "$story_english" "$story_french")
     break_line=""
 
-    for ((i = 0; i < ${#languages[@]}; i++)); do
-        echo "${titles[i]}" >> "./s3/books/${languages[i]}_chengyu.txt"
-        echo "${stories[i]}" >> "./s3/books/${languages[i]}_chengyu.txt"
-        echo "$break_line" >> "./s3/books/${languages[i]}_chengyu.txt"
+    for i in "${!languages[@]}"; do
+        lang="${languages[$i]}"
+        title="${titles[$i]}"
+        story="${stories[$i]}"
+
+        echo "$title" >> "./s3/books/${lang}_chengyu.txt"
+        echo "$story" >> "./s3/books/${lang}_chengyu.txt"
+        echo "$break_line" >> "./s3/books/${lang}_chengyu.txt"
     done
 }
-
 generate_books
 
 
