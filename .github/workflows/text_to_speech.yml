@@ -9,9 +9,12 @@ jobs:
   run-script:
     name: Text to Speech
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+#    permissions:
+#      id-token: write
+#      contents: read
 
     steps:
     - name: Checkout Repository
