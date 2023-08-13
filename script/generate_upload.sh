@@ -35,12 +35,18 @@ story_name_chinese=${index_value}_chinese_version_${title_chinese}
 story_name_english=${index_value}_english_version_${title_chinese}
 story_name_french=${index_value}_french_version_${title_chinese}
 languages=("chinese" "english" "french")
+# Declare the arrays for function of upload_files
+declare -a book_languages=("chinese" "english" "french")
+declare -a story_types=("metadata" "chinese_version" "english_version" "french_version")
+# Declare the arrays and other variables outside of the function generate_books
+titles=("$title_chinese" "$title_english" "$title_english")
+stories=("$story_chinese" "$story_english" "$story_french")
+break_line=""
+languages=("chinese" "english" "french")
 
-
+# Define the function
 generate_books() {
-    titles=("$title_chinese" "$title_english" "$title_english")
-    stories=("$story_chinese" "$story_english" "$story_french")
-    break_line=""
+    local local_prefix="$1"  # Get the local prefix from the function argument
 
     for i in "${!languages[@]}"; do
         lang="${languages[$i]}"
@@ -52,7 +58,7 @@ generate_books() {
         echo "$break_line" >> "${local_prefix}/books/${lang}_chengyu.txt"
     done
 }
-generate_books
+generate_books "${local_prefix}"
 
 
 
@@ -85,10 +91,6 @@ generate_speeches() {
 generate_speeches
 
 
-
-# Declare the arrays outside of the function
-declare -a book_languages=("chinese" "english" "french")
-declare -a story_types=("metadata" "chinese_version" "english_version" "french_version")
 
 # Define the function
 upload_files() {
