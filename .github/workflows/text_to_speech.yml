@@ -27,5 +27,9 @@ jobs:
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
         aws configure set default.region $AWS_REGION
 
-    - name: Generate and upload speeches to s3
-      run: sh /home/runner/work/audio/audio/script/generate_upload.sh
+    - name: Set up environment
+      run: |
+        chmod +x ./script/generate_upload.sh
+
+    - name: Run script
+      run: ./script/generate_upload.sh

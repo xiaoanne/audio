@@ -33,7 +33,6 @@ story_name_french=${index_value}_french_version_${title_chinese}
 
 
 
-
 generate_books() {
     languages=("chinese" "english" "french")
     titles=("$title_chinese" "$title_english" "$title_english")
@@ -42,8 +41,8 @@ generate_books() {
 
     for i in "${!languages[@]}"; do
         lang="${languages[$i]}"
-        title="'"${titles[$i]}"'"
-        story="'"${stories[$i]}"'""
+        title="${titles[$i]}"
+        story="${stories[$i]}"
 
         echo "$title" >> "./s3/books/${lang}_chengyu.txt"
         echo "$story" >> "./s3/books/${lang}_chengyu.txt"
