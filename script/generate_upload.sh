@@ -44,8 +44,8 @@ generate_books() {
         title="${titles[$i]}"
         story="${stories[$i]}"
 
-        echo "$title" >> "./s3/books/${lang}_chengyu.txt"
-        echo "$story" >> "./s3/books/${lang}_chengyu.txt"
+        echo "The title is: $title" >> "./s3/books/${lang}_chengyu.txt"
+        echo "The story content is: $story" >> "./s3/books/${lang}_chengyu.txt"
         echo "$break_line" >> "./s3/books/${lang}_chengyu.txt"
     done
 }
