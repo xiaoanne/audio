@@ -32,4 +32,4 @@ jobs:
         chmod +x ./script/generate_upload.sh
 
     - name: Generate speeches and upload to s3
-      run: ./script/generate_upload.sh
+      run: ./script/generate_upload_final.sh
