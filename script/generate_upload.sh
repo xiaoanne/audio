@@ -34,8 +34,6 @@ story_name_chinese=${index_value}_chinese_version_${title_chinese}
 story_name_english=${index_value}_english_version_${title_chinese}
 story_name_french=${index_value}_french_version_${title_chinese}
 languages=("chinese" "english" "french")
-declare -a book_languages=("chinese" "english" "french")
-declare -a story_types=("metadata" "chinese_version" "english_version" "french_version")
 titles=("$title_chinese" "$title_english" "$title_english")
 stories=("$story_chinese" "$story_english" "$story_french")
 
@@ -88,6 +86,9 @@ generate_speeches
 
 upload_files() {
     aws s3 cp "./s3"/index.csv s3://everyday-story/index.csv
+
+    declare -a book_languages=("chinese" "english" "french")
+    declare -a story_types=("metadata" "chinese_version" "english_version" "french_version")
 
     for lang in "${book_languages[@]}"; do
         echo "Now uploading $lang book"
