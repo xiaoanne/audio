@@ -12,35 +12,38 @@ story_english=$(aws translate translate-text --text "$story_chinese" --source-la
 story_french=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
 # Download existing books and index.csv, update them later then upload them
 aws s3 sync s3://${bucket_name} downloads --exclude "story/*"
-#aws s3 sync s3://everyday-story/books ./downloads/books
-#aws s3 sync s3://everyday-story/index.csv ./downloads/index.csv
 
 
+# Common variable declarations
+category="Chengyu"
+year=$(date +'%Y')
+day_of_year=$(date +'%j')
+task_time=$(date +'%H:%M:%S')
 
-get_index() {
-    local category="Chengyu"
-    local year=$(date +'%Y')
-    local day_of_year=$(date +'%j')
-    local task_time=$(date +'%H:%M:%S')
-    local index="${category}_${year}_${day_of_year}_${task_time}"
-    echo "$index, $title_chinese, $title_english" >> "$csv_key"
-    echo "$index"  # Return the index value
-}
-index_value=$(get_index)  # Call the function and capture the index value
+# Generate index value
+index_value="${category}_${year}_${day_of_year}_${task_time}"
 echo "Index value: $index_value"
 echo "Title value: $title_chinese"
 
-story_name_metadata=${index_value}_metadata_${title_chinese}
-story_name_chinese=${index_value}_chinese_version_${title_chinese}
-story_name_english=${index_value}_english_version_${title_chinese}
-story_name_french=${index_value}_french_version_${title_chinese}
-languages=("chinese" "english" "french")
-# Declare the arrays for function of upload_files
+# Story names using associative array
+declare -A story_names=(
+    ["metadata"]="${index_value}_metadata_${title_chinese}"
+    ["chinese"]="${index_value}_chinese_version_${title_chinese}"
+    ["english"]="${index_value}_english_version_${title_chinese}"
+    ["french"]="${index_value}_french_version_${title_chinese}"
+)
+
+# Declare languages array
+declare -a languages=("chinese" "english" "french")
+
+# Declare the arrays for function upload_files
 declare -a book_languages=("chinese" "english" "french")
 declare -a story_types=("metadata" "chinese_version" "english_version" "french_version")
-# Declare the arrays and other variables outside of the function generate_books
-titles=("$title_chinese" "$title_english" "$title_english")
-stories=("$story_chinese" "$story_english" "$story_french")
+
+# Declare the arrays and other variables for function generate_books
+declare -a titles=("$title_chinese" "$title_english" "$title_english")
+declare -a stories=("$story_chinese" "$story_english" "$story_french")
+
 
 # Create books in multiple language
 generate_books() {
