@@ -15,21 +15,24 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Configure AWS Credentials
+      id: configure-aws
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-southeast-2
 
-    - name: Login to AWS
+    - name: Set AWS Environment Variables
       run: |
-        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-        aws configure set default.region $AWS_REGION
+        echo "AWS_DEFAULT_REGION=${{ steps.configure-aws.outputs.aws-region }}" >> $GITHUB_ENV
+        echo "AWS_ACCESS_KEY_ID=${{ steps.configure-aws.outputs.aws-access-key-id }}" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=${{ steps.configure-aws.outputs.aws-secret-access-key }}" >> $GITHUB_ENV
 
     - name: Set up environment
       run: |
         chmod +x ./script/generate_upload.sh
+        aws s3 sync s3://everyday-story .
+        ls -R
 
-    - name: Generate speeches and upload to s3
-      run: ./script/generate_upload.sh
+#    - name: Generate speeches and upload to s3
+#      run: ./script/generate_upload.sh
