@@ -28,7 +28,7 @@ jobs:
         aws configure set default.region $AWS_REGION
 
     - name: Set up environment
-      run: chmod +x ./script/generate_upload_final.sh
+      run: chmod +x ./script/generate_upload.sh
 
     - name: Generate speeches and upload to s3
-      run: ./script/generate_upload_final.sh
+      run: ./script/generate_upload.sh
