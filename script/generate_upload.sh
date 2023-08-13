@@ -86,6 +86,7 @@ generate_speeches
 
 
 upload_files() {
+    echo "Now uploading index.csv file."
     aws s3 cp "${local_prefix}"/index.csv s3://everyday-story/index.csv
 
     declare -a book_languages=("chinese" "english" "french")
