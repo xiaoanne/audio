@@ -75,12 +75,15 @@ generate_speeches() {
 }
 generate_speeches
 
-upload_files() {
-    aws s3 cp "./s3/index.csv" "s3://everyday-story/index.csv"
 
+
+upload_files() {
+    aws s3 cp "./s3"/index.csv s3://everyday-story/index.csv
+
+    declare -a book_languages=("chinese" "english" "french")
     declare -a story_types=("metadata" "chinese_version" "english_version" "french_version")
 
-    for lang in "${languages[@]}"; do
+    for lang in "${book_languages[@]}"; do
         echo "Now uploading $lang book"
         aws s3 cp "./s3/books/${lang}_chengyu.txt" "s3://everyday-story/books/${lang}_chengyu.txt"
     done
