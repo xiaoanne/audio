@@ -10,7 +10,7 @@ story_chinese=$(sed -n '3,$p' "$file_path" | tr -d '[:space:]' | tr -d '\n')
 story_english=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code en --query 'TranslatedText' --output text)
 story_french=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
 # Download existing books and update them later
-aws s3 sync s3://everyday-story/books ./s3/books
+#aws s3 sync s3://everyday-story/books ./s3/books
 
 
 
@@ -103,4 +103,4 @@ upload_files() {
         aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_${type}_${title_chinese}.mp3" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
     done
 }
-upload_files
+#upload_files
