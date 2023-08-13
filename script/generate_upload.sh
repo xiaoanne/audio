@@ -42,8 +42,8 @@ generate_books() {
 
     for i in "${!languages[@]}"; do
         lang="${languages[$i]}"
-        title="${titles[$i]}"
-        story="${stories[$i]}"
+        title="'"${titles[$i]}"'"
+        story="'"${stories[$i]}"'""
 
         echo "$title" >> "./s3/books/${lang}_chengyu.txt"
         echo "$story" >> "./s3/books/${lang}_chengyu.txt"
