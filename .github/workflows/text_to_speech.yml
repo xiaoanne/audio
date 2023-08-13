@@ -22,6 +22,7 @@ jobs:
       with:
         role-to-assume: arn:aws:iam::453685464323:role/githubb-action-pipeline
         aws-region: ap-southeast-2
+
 #    - name: Configure AWS Credentials
 #      uses: aws-actions/configure-aws-credentials@v1
 #      env:
