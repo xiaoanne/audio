@@ -22,9 +22,7 @@ get_index() {
     local day_of_year=$(date +'%j')
     local task_time=$(date +'%H:%M:%S')
     local index="${category}_${year}_${day_of_year}_${task_time}"
-#    echo "$index, $title_chinese, $title_english" >> "$csv_key"
-#    echo "$new_content" | aws s3 cp - "s3://$bucket_name/$object_key"
-#    echo "$index, $title_chinese, $title_english" | aws s3 cp - "s3://$bucket_name/$csv_key"
+    echo "$index, $title_chinese, $title_english" >> "$csv_key"
     echo "$index"  # Return the index value
 }
 index_value=$(get_index)  # Call the function and capture the index value
@@ -48,9 +46,9 @@ generate_books() {
         title="${titles[$i]}"
         story="${stories[$i]}"
 
-        echo "The title is: $title" >> "./s3/books/${lang}_chengyu.txt"
-        echo "The story content is: $story" >> "./s3/books/${lang}_chengyu.txt"
-        echo "$break_line" >> "./s3/books/${lang}_chengyu.txt"
+        echo "The title is: $title" >> "./downloads/books/${lang}_chengyu.txt"
+        echo "The story content is: $story" >> "./downloads/books/${lang}_chengyu.txt"
+        echo "$break_line" >> "./downloads/books/${lang}_chengyu.txt"
     done
 }
 generate_books
