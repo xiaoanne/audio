@@ -9,6 +9,9 @@ title_english=$(sed -n '2p' "$file_path")
 story_chinese=$(sed -n '3p' "$file_path")
 story_english=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code en --query 'TranslatedText' --output text)
 story_french=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
+# Download existing books and update them later
+aws s3 sync s3://everyday-story/books ./s3/books
+aws s3 sync s3://everyday-story/index.csv ./s3/index.csv
 
 get_index() {
     local category="Chengyu"
