@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#rm ../s3/story/*.mp3
-#rm ../s3/story/*.json
-
 bucket_name='everyday-story'
 echo "pwd is: $(pwd)"
 file_path="./script/story_original.txt"
