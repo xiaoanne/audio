@@ -3,15 +3,16 @@
 bucket_name='everyday-story'
 echo "pwd is: $(pwd)"
 file_path="./script/story_original.txt"
-#csv_key="./s3/index.csv"
-csv_key="./index.csv"
+csv_key="./downloads/index.csv"
 title_chinese=$(head -n 1 "$file_path")
 title_english=$(sed -n '2p' "$file_path")
 story_chinese=$(sed -n '3,$p' "$file_path" | tr -d '[:space:]' | tr -d '\n')
 story_english=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code en --query 'TranslatedText' --output text)
 story_french=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
-# Download existing books and update them later
-#aws s3 sync s3://everyday-story/books ./s3/books
+# Download existing books and index.csv, update them later then upload them
+aws s3 sync s3://${bucket_name} downloads --exclude "story/*"
+#aws s3 sync s3://everyday-story/books ./downloads/books
+#aws s3 sync s3://everyday-story/index.csv ./downloads/index.csv
 
 
 
@@ -24,7 +25,6 @@ get_index() {
 #    echo "$index, $title_chinese, $title_english" >> "$csv_key"
 #    echo "$new_content" | aws s3 cp - "s3://$bucket_name/$object_key"
 #    echo "$index, $title_chinese, $title_english" | aws s3 cp - "s3://$bucket_name/$csv_key"
-    aws s3api put-object --bucket "${bucket_name}" --key "${csv_key}" --append --body <(echo "$index, $title_chinese, $title_english")
     echo "$index"  # Return the index value
 }
 index_value=$(get_index)  # Call the function and capture the index value
