@@ -3,7 +3,7 @@ name: Text to Speech
 on:
   push:
     branches:
-      - main  # Change this to your desired branch
+      - main
 
 jobs:
   run-script:
@@ -12,9 +12,6 @@ jobs:
     concurrency:
       group: ${{ github.ref }}
       cancel-in-progress: true
-#    permissions:
-#      id-token: write
-#      contents: read
 
     steps:
     - name: Checkout Repository
@@ -34,6 +31,9 @@ jobs:
         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
         aws configure set default.region $AWS_REGION
+
+    - name: Backup s3 bucket
+      run: aws s3 sync s3://everyday-story s3://everyday-story-backup
 
     - name: Set up environment
       run: chmod +x ./script/generate_upload.sh
