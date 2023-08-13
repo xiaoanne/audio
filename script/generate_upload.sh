@@ -85,12 +85,16 @@ generate_speeches() {
 generate_speeches
 
 
+
+# Declare the arrays outside of the function
+declare -a book_languages=("chinese" "english" "french")
+declare -a story_types=("metadata" "chinese_version" "english_version" "french_version")
+
+# Define the function
 upload_files() {
+    local local_prefix="$1" # Get the local prefix from the function argument
     echo "Now uploading index.csv file."
     aws s3 cp "${local_prefix}"/index.csv s3://everyday-story/index.csv
-
-    declare -a book_languages=("chinese" "english" "french")
-    declare -a story_types=("metadata" "chinese_version" "english_version" "french_version")
 
     for lang in "${book_languages[@]}"; do
         echo "Now uploading $lang book"
@@ -107,4 +111,6 @@ upload_files() {
         aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_${type}_${title_chinese}.mp3" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
     done
 }
-upload_files
+
+# Call the function and pass the local prefix as an argument
+upload_files "${local_prefix}"
