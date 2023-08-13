@@ -3,7 +3,7 @@
 bucket_name='everyday-story'
 echo "pwd is: $(pwd)"
 file_path="./script/story_original.txt"
-csv_key="./s3/index.csv"
+#csv_key="./s3/index.csv"
 csv_key="./index.csv"
 title_chinese=$(head -n 1 "$file_path")
 title_english=$(sed -n '2p' "$file_path")
