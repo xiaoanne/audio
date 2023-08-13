@@ -41,12 +41,11 @@ declare -a story_types=("metadata" "chinese_version" "english_version" "french_v
 # Declare the arrays and other variables outside of the function generate_books
 titles=("$title_chinese" "$title_english" "$title_english")
 stories=("$story_chinese" "$story_english" "$story_french")
-break_line=""
-languages=("chinese" "english" "french")
 
-# Define the function
+# Create books in multiple language
 generate_books() {
     local local_prefix="$1"  # Get the local prefix from the function argument
+    break_line=""
 
     for i in "${!languages[@]}"; do
         lang="${languages[$i]}"
@@ -63,7 +62,7 @@ generate_books "${local_prefix}"
 
 
 create_json_file() {
-    # Create the JSON content using variables
+    # Create the JSON content using variables and Write the JSON content to the file
     local meta_content='{
       "chinese_title": "'"$title_chinese"'",
       "english_title": "'"$title_english"'",
@@ -74,7 +73,6 @@ create_json_file() {
       "story_french": "'"$story_french"'"
     }'
 
-    # Write the JSON content to the file
     echo "$meta_content" > "${local_prefix}/story/"$story_name_metadata".json"
     echo "Generated the metadata json file."
 }
@@ -92,7 +90,7 @@ generate_speeches
 
 
 
-# Define the function
+# Upload books,index file, mp3 audio and metadata json files into s3 bucket
 upload_files() {
     local local_prefix="$1" # Get the local prefix from the function argument
     echo "Now uploading index.csv file."
@@ -113,6 +111,4 @@ upload_files() {
         aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_${type}_${title_chinese}.mp3" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
     done
 }
-
-# Call the function and pass the local prefix as an argument
 upload_files "${local_prefix}"
