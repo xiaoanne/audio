@@ -24,7 +24,7 @@ get_index() {
 #    echo "$index, $title_chinese, $title_english" >> "$csv_key"
 #    echo "$new_content" | aws s3 cp - "s3://$bucket_name/$object_key"
 #    echo "$index, $title_chinese, $title_english" | aws s3 cp - "s3://$bucket_name/$csv_key"
-    aws s3api put-object --bucket "$bucket_name" --key "$csv_key" --append --body <(echo "$index, $title_chinese, $title_english")
+    aws s3api put-object --bucket "${bucket_name}" --key "${csv_key}" --append --body <(echo "$index, $title_chinese, $title_english")
     echo "$index"  # Return the index value
 }
 index_value=$(get_index)  # Call the function and capture the index value
