@@ -60,6 +60,7 @@ generate_books() {
         title="${titles[$i]}"
         story="${stories[$i]}"
 
+        # shellcheck disable=SC2129
         echo "The title is: $title" >> "${local_prefix}/books/${lang}_chengyu.txt"
         echo "The story content is: $story" >> "${local_prefix}/books/${lang}_chengyu.txt"
         echo "$break_line" >> "${local_prefix}/books/${lang}_chengyu.txt"
@@ -81,7 +82,7 @@ create_json_file() {
       "story_french": "'"$story_french"'"
     }'
 
-    echo "$meta_content" > "${local_prefix}/story/"$story_name_metadata".json"
+    echo "$meta_content" > "${local_prefix}/story/"${story_name_metadata}.json"
     echo "Generated the metadata json file."
 }
 create_json_file
