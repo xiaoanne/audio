@@ -107,10 +107,10 @@ upload_files() {
         aws s3 cp "${local_prefix}/books/${lang}_chengyu.txt" "s3://everyday-story/books/${lang}_chengyu.txt"
     done
 
-    for type in "${story_types[@]}"; do
-        echo "Now uploading mp3 and ${type} json files"
-        aws s3 cp "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3" "s3://everyday-story/story/${index_value}_${type}_${title_chinese}.mp3"
-    done
+#    for type in "${story_types[@]}"; do
+#        echo "Now uploading mp3 and ${type} json files"
+#        aws s3 cp "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3" "s3://everyday-story/story/${index_value}_${type}_${title_chinese}.mp3"
+#    done
 }
 upload_files "${local_prefix}"
 
@@ -118,6 +118,11 @@ upload_files "${local_prefix}"
 
 update_tags() {
     local local_prefix="$1" # Get the local prefix from the function argument
+
+    for type in "${story_types[@]}"; do
+        echo "Now uploading mp3 and ${type} json files"
+        aws s3 cp "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3" "s3://everyday-story/story/${index_value}_${type}_${title_chinese}.mp3"
+    done
 
     for type in "${story_types[@]}"; do
         echo "Now updating s3 objects tags"
