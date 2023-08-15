@@ -44,7 +44,7 @@ jobs:
 
     - name: Delete backup objects older than 7 days, and then emtpy s3 bucket folder
       run: |
-        aws s3api list-objects-v2 --bucket everyday-story-backup --query 'Contents[?LastModified<=`2023-08-15`].{Key: Key}' --output text > objects.txt
+        aws s3api list-objects-v2 --bucket everyday-story-backup --query 'Contents[?LastModified<=`2023-08-16`].{Key: Key}' --output text > objects.txt
         while read -r object; do
             aws s3api delete-object --bucket everyday-story-backup --key "$object"
         done < objects.txt
