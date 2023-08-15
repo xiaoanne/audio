@@ -79,9 +79,9 @@ create_json_file
 
 generate_speeches() {
     echo "Generating story speeches."
-    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 "${local_prefix}/story/"${story_name_chinese}.mp3
-    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 "${local_prefix}/story/"${story_name_english}.mp3
-    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 "${local_prefix}/story/"${story_name_french}.mp3
+    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_english}.mp3"
+    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_french}.mp3"
 }
 generate_speeches
 
