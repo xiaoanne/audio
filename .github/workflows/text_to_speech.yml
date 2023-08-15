@@ -34,7 +34,10 @@ jobs:
         chmod +x ./script/generate_upload.sh
 
     - name: Backup s3 bucket
-      run: aws s3 sync s3://everyday-story s3://everyday-story-backup
+      run: |
+        aws s3 sync s3://everyday-story/books s3://everyday-story-backup/books_$(date +%F)
+        aws s3 sync s3://everyday-story/story s3://everyday-story-backup/story_$(date +%F)
+        aws s3 sync s3://everyday-story/index.csv s3://everyday-story-backup/index_$(date +%F).csv
 
     - name: Generate speeches and upload to s3
       run: ./script/generate_upload.sh
