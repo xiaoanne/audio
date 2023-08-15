@@ -77,13 +77,13 @@ create_json_file
 
 
 
-generate_speeches() {
-    echo "Generating story speeches."
-    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
-    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_english}.mp3"
-    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_french}.mp3"
-}
-generate_speeches
+#generate_speeches() {
+#    echo "Generating story speeches."
+#    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
+#    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
+#    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
+#}
+#generate_speeches
 
 
 
@@ -93,8 +93,14 @@ upload_files() {
     echo "Now write to index.csv and upload the index.csv file."
     echo "${index_value}, ${title_chinese}, ${title_english}" >> "${local_prefix}/index.csv"
     aws s3 cp "${local_prefix}"/index.csv s3://everyday-story/index.csv
+
     echo "Now uploading the metadata json file."
     aws s3 cp "${local_prefix}/story/${index_value}_metadata_${title_chinese}.json" "s3://everyday-story/story/${index_value}_metadata_${title_chinese}.json"
+
+    echo "Now creating story speeches in multiples language."
+    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
 
     for lang in "${book_languages[@]}"; do
         echo "Now uploading $lang book"
