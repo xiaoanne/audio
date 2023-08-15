@@ -6,6 +6,7 @@ file_path="./script/story_original.txt"
 local_prefix="./downloads"
 title_chinese=$(head -n 1 "$file_path")
 title_english=$(sed -n '2p' "$file_path")
+# ====================Need to update when adding another language==================
 story_chinese=$(sed -n '3,$p' "$file_path" | tr -d '[:space:]' | tr -d '\n')
 story_english=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code en --query 'TranslatedText' --output text)
 story_french=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
@@ -22,11 +23,14 @@ echo "Title value: $title_chinese"
 # Download existing books and index.csv, update them later then upload them
 aws s3 sync s3://${bucket_name} downloads --exclude "story/*"
 
+
+# ====================Need to update when adding another language==================
 # Declare the arrays for function of upload_files
 languages=("chinese" "english" "french")
 declare -a book_languages=("chinese" "english" "french")
 declare -a story_types=("chinese_version" "english_version" "french_version")
 
+# ====================Need to update when adding another language==================
 # Declare the arrays and other variables outside of the function generate_books
 titles=("$title_chinese" "$title_english" "$title_english")
 stories=("$story_chinese" "$story_english" "$story_french")
@@ -67,7 +71,7 @@ create_json_file() {
 create_json_file
 
 
-
+# ====================Need to update when adding another language==================
 generate_speeches() {
     echo "Generating story speeches."
     aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 "${local_prefix}/story/${index_value}_chinese_version_${title_chinese}.mp3"
