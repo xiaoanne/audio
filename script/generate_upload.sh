@@ -1,20 +1,14 @@
 #!/bin/bash
 
+# Common variable declarations
 bucket_name='everyday-story'
-echo "pwd is: $(pwd)"
 file_path="./script/story_original.txt"
-#csv_key="./downloads/index.csv"
 local_prefix="./downloads"
 title_chinese=$(head -n 1 "$file_path")
 title_english=$(sed -n '2p' "$file_path")
 story_chinese=$(sed -n '3,$p' "$file_path" | tr -d '[:space:]' | tr -d '\n')
 story_english=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code en --query 'TranslatedText' --output text)
 story_french=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
-# Download existing books and index.csv, update them later then upload them
-aws s3 sync s3://${bucket_name} downloads --exclude "story/*"
-
-
-# Common variable declarations
 category="Chengyu"
 year=$(date +'%Y')
 day_of_year=$(date +'%j')
@@ -26,10 +20,20 @@ echo "Index value: $index_value"
 echo "Title value: $title_chinese"
 
 
-story_name_metadata=${index_value}_metadata_${title_chinese}
-story_name_chinese=${index_value}_chinese_version_${title_chinese}
-story_name_english=${index_value}_english_version_${title_chinese}
-story_name_french=${index_value}_french_version_${title_chinese}
+# Download existing books and index.csv, update them later then upload them
+aws s3 sync s3://${bucket_name} downloads --exclude "story/*"
+
+
+
+
+## shellcheck disable=SC2034
+#story_name_metadata=${index_value}_metadata_${title_chinese}
+## shellcheck disable=SC2034
+#story_name_chinese=${index_value}_chinese_version_${title_chinese}
+## shellcheck disable=SC2034
+#story_name_english=${index_value}_english_version_${title_chinese}
+## shellcheck disable=SC2034
+#story_name_french=${index_value}_french_version_${title_chinese}
 languages=("chinese" "english" "french")
 # Declare the arrays for function of upload_files
 declare -a book_languages=("chinese" "english" "french")
@@ -102,23 +106,30 @@ upload_files() {
         aws s3 cp "${local_prefix}/books/${lang}_chengyu.txt" "s3://everyday-story/books/${lang}_chengyu.txt"
     done
 
-
+    echo "Now uploading mp3 files."
     for type in "${story_types[@]}"; do
         echo "Now uploading ${type} mp3 files."
         aws s3 cp "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3" "s3://everyday-story/story/${index_value}_${type}_${title_chinese}.mp3"
     done
-}
-upload_files "${local_prefix}"
 
-
-
-update_tags() {
-    local local_prefix="$1" # Get the local prefix from the function argument
-
+    echo "Now updating file tags."
     for type in "${story_types[@]}"; do
         echo "Now updating s3 objects tags"
         aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_metadata_${title_chinese}.json" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}, {Key=metadata,Value=yes}]'
         aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_${type}_${title_chinese}.mp3" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
     done
 }
-update_tags "${local_prefix}"
+upload_files "${local_prefix}"
+
+
+
+#update_tags() {
+#    local local_prefix="$1" # Get the local prefix from the function argument
+#
+#    for type in "${story_types[@]}"; do
+#        echo "Now updating s3 objects tags"
+#        aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_metadata_${title_chinese}.json" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}, {Key=metadata,Value=yes}]'
+#        aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_${type}_${title_chinese}.mp3" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
+#    done
+#}
+#update_tags "${local_prefix}"
