@@ -91,7 +91,7 @@ generate_speeches
 upload_files() {
     local local_prefix="$1" # Get the local prefix from the function argument
     echo "Now write to index.csv and upload the index.csv file."
-    echo "${index_value}, ${title_chinese}, ${title_english}" >> "$csv_key"
+    echo "${index_value}, ${title_chinese}, ${title_english}" >> "${local_prefix}/index.csv"
     aws s3 cp "${local_prefix}"/index.csv s3://everyday-story/index.csv
 
     for lang in "${book_languages[@]}"; do
