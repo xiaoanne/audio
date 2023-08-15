@@ -33,7 +33,7 @@ story_name_french=${index_value}_french_version_${title_chinese}
 languages=("chinese" "english" "french")
 # Declare the arrays for function of upload_files
 declare -a book_languages=("chinese" "english" "french")
-declare -a story_types=("metadata" "chinese_version" "english_version" "french_version")
+declare -a story_types=("chinese_version" "english_version" "french_version")
 # Declare the arrays and other variables outside of the function generate_books
 titles=("$title_chinese" "$title_english" "$title_english")
 stories=("$story_chinese" "$story_english" "$story_french")
@@ -107,10 +107,10 @@ upload_files() {
         aws s3 cp "${local_prefix}/books/${lang}_chengyu.txt" "s3://everyday-story/books/${lang}_chengyu.txt"
     done
 
-#    for type in "${story_types[@]}"; do
-#        echo "Now uploading mp3 and ${type} json files"
-#        aws s3 cp "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3" "s3://everyday-story/story/${index_value}_${type}_${title_chinese}.mp3"
-#    done
+    for type in "${story_types[@]}"; do
+        echo "Now uploading mp3 and ${type} json files"
+        aws s3 cp "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3" "s3://everyday-story/story/${index_value}_${type}_${title_chinese}.mp3"
+    done
 }
 upload_files "${local_prefix}"
 
@@ -118,11 +118,6 @@ upload_files "${local_prefix}"
 
 update_tags() {
     local local_prefix="$1" # Get the local prefix from the function argument
-
-    for type in "${story_types[@]}"; do
-        echo "Now uploading mp3 and ${type} json files"
-        aws s3 cp "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3" "s3://everyday-story/story/${index_value}_${type}_${title_chinese}.mp3"
-    done
 
     for type in "${story_types[@]}"; do
         echo "Now updating s3 objects tags"
