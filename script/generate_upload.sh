@@ -85,7 +85,7 @@ generate_speeches() {
 }
 generate_speeches
 
-
+ls -R
 
 # Upload books, index file, mp3 audio and metadata json files into s3 bucket
 upload_files() {
@@ -98,13 +98,13 @@ upload_files() {
     aws s3 cp "${local_prefix}/story/${index_value}_metadata_${title_chinese}.json" "s3://everyday-story/story/${index_value}_metadata_${title_chinese}.json"
 
     for lang in "${book_languages[@]}"; do
-        echo "Now uploading $lang book"
+        echo "Now uploading $lang book."
         aws s3 cp "${local_prefix}/books/${lang}_chengyu.txt" "s3://everyday-story/books/${lang}_chengyu.txt"
     done
 
 
     for type in "${story_types[@]}"; do
-        echo "Now uploading mp3 and ${type} json files"
+        echo "Now uploading ${type} mp3 files."
         aws s3 cp "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3" "s3://everyday-story/story/${index_value}_${type}_${title_chinese}.mp3"
     done
 }
