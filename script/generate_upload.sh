@@ -112,6 +112,7 @@ upload_files() {
     done
 
     for type in "${story_types[@]}"; do
+        sleep 10
         echo "Now uploading mp3 and ${type} json files"
         aws s3 cp "${local_prefix}/story/${index_value}_metadata_${title_chinese}.json" "s3://everyday-story/story/${index_value}_metadata_${title_chinese}.json"
         aws s3 cp "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3" "s3://everyday-story/story/${index_value}_${type}_${title_chinese}.mp3"
