@@ -26,17 +26,15 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-southeast-2
 
-    - name: Login to AWS
+    - name: Login to AWS, Set up environment
       run: |
         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
         aws configure set default.region $AWS_REGION
+        chmod +x ./script/generate_upload.sh
 
     - name: Backup s3 bucket
       run: aws s3 sync s3://everyday-story s3://everyday-story-backup
-
-    - name: Set up environment
-      run: chmod +x ./script/generate_upload.sh
 
     - name: Generate speeches and upload to s3
       run: ./script/generate_upload.sh
