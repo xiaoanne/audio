@@ -99,10 +99,10 @@ generate_speeches
 
 
 
-# Upload books,index file, mp3 audio and metadata json files into s3 bucket
+# Upload books, index file, mp3 audio and metadata json files into s3 bucket
 upload_files() {
     local local_prefix="$1" # Get the local prefix from the function argument
-    echo "Now uploading index.csv file."
+    echo "Now write to index.csv and upload the index.csv file."
     echo "${index_value}, ${title_chinese}, ${title_english}" >> "$csv_key"
     aws s3 cp "${local_prefix}"/index.csv s3://everyday-story/index.csv
 
