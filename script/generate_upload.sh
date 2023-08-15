@@ -70,7 +70,7 @@ create_json_file() {
       "story_french": "'"$story_french"'"
     }'
 
-    echo "$meta_content" > "${local_prefix}/story/${index_value}_metadata_${title_chinese}.json.json"
+    echo "$meta_content" > "${local_prefix}/story/${index_value}_metadata_${title_chinese}.json"
     echo "Generated the metadata json file."
 }
 create_json_file
