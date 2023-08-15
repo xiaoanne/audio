@@ -42,10 +42,6 @@ generate_books() {
         lang="${languages[$i]}"
         title="${titles[$i]}"
         story="${stories[$i]}"
-
-#        echo "The title is: $title" >> "${local_prefix}/books/${lang}_chengyu.txt"
-#        echo "The story content is: $story" >> "${local_prefix}/books/${lang}_chengyu.txt"
-#        echo "$break_line" >> "${local_prefix}/books/${lang}_chengyu.txt"
         echo "The title is: $title"; echo "The story content is: $story"; echo "$break_line" >> "${local_prefix}/books/${lang}_chengyu.txt"
     done
 }
@@ -80,7 +76,7 @@ generate_speeches() {
 }
 generate_speeches
 
-ls -R
+
 
 # Upload books, index file, mp3 audio and metadata json files into s3 bucket
 upload_files() {
@@ -111,16 +107,3 @@ upload_files() {
     done
 }
 upload_files "${local_prefix}"
-
-
-
-#update_tags() {
-#    local local_prefix="$1" # Get the local prefix from the function argument
-#
-#    for type in "${story_types[@]}"; do
-#        echo "Now updating s3 objects tags"
-#        aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_metadata_${title_chinese}.json" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}, {Key=metadata,Value=yes}]'
-#        aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_${type}_${title_chinese}.mp3" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
-#    done
-#}
-#update_tags "${local_prefix}"
