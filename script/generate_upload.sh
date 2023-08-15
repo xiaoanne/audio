@@ -25,18 +25,6 @@ index_value="${category}_${year}_${day_of_year}_${task_time}"
 echo "Index value: $index_value"
 echo "Title value: $title_chinese"
 
-#get_index() {
-#    local category="Chengyu"
-#    local year=$(date +'%Y')
-#    local day_of_year=$(date +'%j')
-#    local task_time=$(date +'%H:%M:%S')
-#    local index="${category}_${year}_${day_of_year}_${task_time}"
-#    echo "$index, $title_chinese, $title_english" >> "$csv_key"
-#    echo "$index"  # Return the index value
-#}
-#index_value=$(get_index)  # Call the function and capture the index value
-#echo "Index value: $index_value"
-#echo "Title value: $title_chinese"
 
 story_name_metadata=${index_value}_metadata_${title_chinese}
 story_name_chinese=${index_value}_chinese_version_${title_chinese}
