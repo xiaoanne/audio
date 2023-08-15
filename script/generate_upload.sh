@@ -15,10 +15,15 @@ year=$(date +'%Y')
 day_of_year=$(date +'%j')
 task_time=$(date +'%H:%M:%S')
 
+# ====================Need to update when adding another language==================
 # Generate index value
 index_value="${category}_${year}_${day_of_year}_${task_time}"
-echo "Index value: $index_value"
-echo "Title value: $title_chinese"
+echo "Index value: ${index_value}"
+echo "Title value: ${title_chinese}"
+echo "Chinese story: ${story_chinese}"
+echo "English story: ${story_english}"
+echo "French story: ${story_french}"
+
 
 # Download existing books and index.csv, update them later then upload them
 aws s3 sync s3://${bucket_name} downloads --exclude "story/*"
