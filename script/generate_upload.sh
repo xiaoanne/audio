@@ -77,13 +77,13 @@ create_json_file
 
 
 
-#generate_speeches() {
-#    echo "Generating story speeches."
-#    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
-#    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
-#    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
-#}
-#generate_speeches
+generate_speeches() {
+    echo "Generating story speeches."
+    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
+}
+generate_speeches
 
 
 
@@ -97,15 +97,11 @@ upload_files() {
     echo "Now uploading the metadata json file."
     aws s3 cp "${local_prefix}/story/${index_value}_metadata_${title_chinese}.json" "s3://everyday-story/story/${index_value}_metadata_${title_chinese}.json"
 
-    echo "Now creating story speeches in multiples language."
-    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
-    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
-    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3"
-
     for lang in "${book_languages[@]}"; do
         echo "Now uploading $lang book"
         aws s3 cp "${local_prefix}/books/${lang}_chengyu.txt" "s3://everyday-story/books/${lang}_chengyu.txt"
     done
+
 
     for type in "${story_types[@]}"; do
         echo "Now uploading mp3 and ${type} json files"
