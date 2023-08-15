@@ -19,28 +19,19 @@ index_value="${category}_${year}_${day_of_year}_${task_time}"
 echo "Index value: $index_value"
 echo "Title value: $title_chinese"
 
-
 # Download existing books and index.csv, update them later then upload them
 aws s3 sync s3://${bucket_name} downloads --exclude "story/*"
 
-
-
-
-## shellcheck disable=SC2034
-#story_name_metadata=${index_value}_metadata_${title_chinese}
-## shellcheck disable=SC2034
-#story_name_chinese=${index_value}_chinese_version_${title_chinese}
-## shellcheck disable=SC2034
-#story_name_english=${index_value}_english_version_${title_chinese}
-## shellcheck disable=SC2034
-#story_name_french=${index_value}_french_version_${title_chinese}
-languages=("chinese" "english" "french")
 # Declare the arrays for function of upload_files
+languages=("chinese" "english" "french")
 declare -a book_languages=("chinese" "english" "french")
 declare -a story_types=("chinese_version" "english_version" "french_version")
+
 # Declare the arrays and other variables outside of the function generate_books
 titles=("$title_chinese" "$title_english" "$title_english")
 stories=("$story_chinese" "$story_english" "$story_french")
+
+
 
 # Create books in multiple language
 generate_books() {
@@ -52,10 +43,10 @@ generate_books() {
         title="${titles[$i]}"
         story="${stories[$i]}"
 
-        # shellcheck disable=SC2129
-        echo "The title is: $title" >> "${local_prefix}/books/${lang}_chengyu.txt"
-        echo "The story content is: $story" >> "${local_prefix}/books/${lang}_chengyu.txt"
-        echo "$break_line" >> "${local_prefix}/books/${lang}_chengyu.txt"
+#        echo "The title is: $title" >> "${local_prefix}/books/${lang}_chengyu.txt"
+#        echo "The story content is: $story" >> "${local_prefix}/books/${lang}_chengyu.txt"
+#        echo "$break_line" >> "${local_prefix}/books/${lang}_chengyu.txt"
+        echo "The title is: $title"; echo "The story content is: $story"; echo "$break_line" >> "${local_prefix}/books/${lang}_chengyu.txt"
     done
 }
 generate_books "${local_prefix}"
