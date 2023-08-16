@@ -2,7 +2,7 @@
 
 # Common variable declarations
 bucket_name='everyday-story'
-file_path="./script/story_original.txt"
+file_path="./chinese_script/story_original.txt"
 local_prefix="./downloads"
 s3_folder="古蜀国密码"
 sample_rate=24000
