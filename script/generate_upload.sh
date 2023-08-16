@@ -4,6 +4,7 @@
 bucket_name='everyday-story'
 file_path="./script/story_original.txt"
 local_prefix="./downloads"
+sample_rate=24000
 title_chinese=$(head -n 1 "$file_path")
 title_english=$(sed -n '2p' "$file_path")
 # ====================Need to update when adding another language==================
@@ -84,9 +85,9 @@ create_json_file
 # ====================Need to update when adding another language==================
 generate_speeches() {
     echo "Generating story speeches."
-    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate 16000 "${local_prefix}/story/${index_value}_chinese_version_${title_chinese}.mp3"
-    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate 16000 "${local_prefix}/story/${index_value}_english_version_${title_chinese}.mp3"
-    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate 16000 "${local_prefix}/story/${index_value}_french_version_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "$story_chinese" --output-format mp3 --voice-id Zhiyu --sample-rate $sample_rate "${local_prefix}/story/${index_value}_chinese_version_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate $sample_rate "${local_prefix}/story/${index_value}_english_version_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate $sample_rate "${local_prefix}/story/${index_value}_french_version_${title_chinese}.mp3"
 }
 generate_speeches
 
