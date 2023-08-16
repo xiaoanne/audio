@@ -28,7 +28,7 @@ echo "Chinese story: ${story_chinese}"
 
 
 # Download existing books and index.csv, update them later then upload them
-aws s3 sync s3://${bucket_name} downloads --exclude "${s3_folder}/*"
+#aws s3 sync s3://${bucket_name} downloads --exclude "${s3_folder}/*"
 
 
 # ====================Need to update when adding another language==================
