@@ -101,7 +101,7 @@ done
 
 # Process each chunk and synthesize speech
 for chunk in "${chunks[@]}"; do
-    aws polly synthesize-speech --text "$chunk" --output-format mp3 --voice-id Zhiyu --sample-rate $sample_rate "${local_prefix}/${s3_folder}/${index_value}_古蜀国密码_${chunk}.mp3"
+    aws polly synthesize-speech --text "$chunk" --output-format mp3 --voice-id Zhiyu --sample-rate $sample_rate "${local_prefix}/${s3_folder}/${index_value}_古蜀国密码_$(date +'%H:%M:%S').mp3"
 done
 
 
