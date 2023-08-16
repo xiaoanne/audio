@@ -1,4 +1,4 @@
-name: Text to Speech
+name: Chinese Text to Speech
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   run-script:
-    name: Text to Speech
+    name: Chinese Text to Speech
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.ref }}
