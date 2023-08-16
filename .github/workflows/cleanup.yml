@@ -1,62 +1,62 @@
-name: Clean up old files
-
-on:
-  schedule:
-    - cron: '0 20 * * 3' # This corresponds to 8am NZST on Thursdays
-
-jobs:
-  run-script:
-    name: Remove old files
-    runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.ref }}
-      cancel-in-progress: true
-
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      env:
-        AWS_CONFIG_FILE: ${{ github.workspace }}/aws-env.env
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-southeast-2
-
-    - name: Login to AWS, Set up environment
-      run: |
-        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-        aws configure set default.region $AWS_REGION
-        chmod +x ./script/generate_upload.sh
-
-    - name: Delete everyday-story bucket objects older than 30 days, and then emtpy s3 bucket folder
-      run: |
-        
-        aws s3api list-objects-v2 --bucket everyday-story --query 'Contents[?LastModified<=`2023-08-17`].{Key: Key}' --output text > objects.txt
-        while read -r object; do
-            aws s3api delete-object --bucket everyday-story-backup --key "$object"
-        done < objects.txt
-
-    - name: Delete everyday-story-backup bucket objects older than 7 days, and then emtpy s3 bucket folder
-      run: |
-        
-        aws s3api list-objects-v2 --bucket everyday-story-backup --query 'Contents[?LastModified<=`2023-08-17`].{Key: Key}' --output text > objects.txt
-        while read -r object; do
-            aws s3api delete-object --bucket everyday-story-backup --key "$object"
-        done < objects.txt
-        
-        aws s3api list-objects-v2 --bucket everyday-story-backup --output json > objects_no_size.json
-        jq -r '.Contents[] | select(.Size == 0) | .Key' objects_no_size.json > empty_folders.txt
-        while read -r folder; do
-            aws s3 rm "s3://everyday-story-backup/$folder"
-        done < empty_folders.txt
-
-
-
-
-
-
-
+#name: Clean up old files
+#
+#on:
+#  schedule:
+#    - cron: '0 20 * * 3' # This corresponds to 8am NZST on Thursdays
+#
+#jobs:
+#  run-script:
+#    name: Remove old files
+#    runs-on: ubuntu-latest
+#    concurrency:
+#      group: ${{ github.ref }}
+#      cancel-in-progress: true
+#
+#    steps:
+#    - name: Checkout Repository
+#      uses: actions/checkout@v2
+#
+#    - name: Configure AWS Credentials
+#      uses: aws-actions/configure-aws-credentials@v1
+#      env:
+#        AWS_CONFIG_FILE: ${{ github.workspace }}/aws-env.env
+#      with:
+#        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#        aws-region: ap-southeast-2
+#
+#    - name: Login to AWS, Set up environment
+#      run: |
+#        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+#        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+#        aws configure set default.region $AWS_REGION
+#        chmod +x ./script/generate_upload.sh
+#
+#    - name: Delete everyday-story bucket objects older than 30 days, and then emtpy s3 bucket folder
+#      run: |
+#
+#        aws s3api list-objects-v2 --bucket everyday-story --query 'Contents[?LastModified<=`2023-08-17`].{Key: Key}' --output text > objects.txt
+#        while read -r object; do
+#            aws s3api delete-object --bucket everyday-story-backup --key "$object"
+#        done < objects.txt
+#
+#    - name: Delete everyday-story-backup bucket objects older than 7 days, and then emtpy s3 bucket folder
+#      run: |
+#
+#        aws s3api list-objects-v2 --bucket everyday-story-backup --query 'Contents[?LastModified<=`2023-08-17`].{Key: Key}' --output text > objects.txt
+#        while read -r object; do
+#            aws s3api delete-object --bucket everyday-story-backup --key "$object"
+#        done < objects.txt
+#
+#        aws s3api list-objects-v2 --bucket everyday-story-backup --output json > objects_no_size.json
+#        jq -r '.Contents[] | select(.Size == 0) | .Key' objects_no_size.json > empty_folders.txt
+#        while read -r folder; do
+#            aws s3 rm "s3://everyday-story-backup/$folder"
+#        done < empty_folders.txt
+#
+#
+#
+#
+#
+#
+#
