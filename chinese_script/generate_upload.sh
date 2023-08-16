@@ -110,11 +110,11 @@ upload_files() {
         aws s3 cp "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3" "s3://everyday-story/${s3_folder}/${index_value}_${type}_${title_chinese}.mp3"
     done
 
-    echo "Now updating file tags."
-    for type in "${story_types[@]}"; do
-        echo "Now updating s3 objects tags"
-        aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_metadata_${title_chinese}.json" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}, {Key=metadata,Value=yes}]'
-        aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_${type}_${title_chinese}.mp3" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
-    done
+#    echo "Now updating file tags."
+#    for type in "${story_types[@]}"; do
+#        echo "Now updating s3 objects tags"
+#        aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_metadata_${title_chinese}.json" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}, {Key=metadata,Value=yes}]'
+#        aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_${type}_${title_chinese}.mp3" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
+#    done
 }
 upload_files "${local_prefix}"
