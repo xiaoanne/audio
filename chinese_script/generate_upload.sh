@@ -88,9 +88,6 @@ generate_speeches() {
 generate_speeches
 text=$story_chinese
 max_text_length=2500  # Adjust this value based on the maximum allowed text length
-
-# Split the text into smaller chunks
-max_text_length=3000  # Define the maximum text length
 chunks=( "${text}" )  # Initialize an array with the full text
 
 # Split the text into chunks
