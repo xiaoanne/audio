@@ -107,7 +107,7 @@ upload_files() {
     echo "Now uploading mp3 files."
     for type in "${story_types[@]}"; do
         echo "Now uploading ${type} mp3 files."
-        aws s3 cp "${local_prefix}/story/${index_value}_${type}_${title_chinese}.mp3" "s3://everyday-story/${s3_folder}/${index_value}_${type}_${title_chinese}.mp3"
+        aws s3 cp "${local_prefix}/${s3_folder}/${index_value}_古蜀国密码_${title_chinese}.mp3" "s3://everyday-story/${s3_folder}/${index_value}_古蜀国密码_${title_chinese}.mp3"
     done
 
 #    echo "Now updating file tags."
