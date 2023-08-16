@@ -86,6 +86,23 @@ generate_speeches() {
 #    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate $sample_rate "${local_prefix}/${s3_folder}/${index_value}_french_version_${title_chinese}.mp3"
 }
 generate_speeches
+text=$story_chinese
+max_text_length=2500  # Adjust this value based on the maximum allowed text length
+
+# Split the text into smaller chunks
+max_text_length=3000  # Define the maximum text length
+chunks=( "${text}" )  # Initialize an array with the full text
+
+# Split the text into chunks
+while [ "${#chunks[${#chunks[@]}-1]}" -gt "$max_text_length" ]; do
+    chunks+=("${chunks[${#chunks[@]}-1]:$max_text_length}")
+    chunks[${#chunks[@]}-2]="${chunks[${#chunks[@]}-2]:0:$max_text_length}"
+done
+
+# Process each chunk and synthesize speech
+for chunk in "${chunks[@]}"; do
+    aws polly synthesize-speech --text "$chunk" --output-format mp3 --voice-id Zhiyu --sample-rate $sample_rate "${local_prefix}/${s3_folder}/${index_value}_古蜀国密码_${chunk}.mp3"
+done
 
 
 
