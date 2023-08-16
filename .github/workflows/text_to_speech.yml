@@ -42,31 +42,6 @@ jobs:
     - name: Generate speeches and upload to s3
       run: ./script/generate_upload.sh
 
-    - name: Delete everyday-story bucket objects older than 30 days, and then emtpy s3 bucket folder
-      run: |
-        
-        aws s3api list-objects-v2 --bucket everyday-story --query 'Contents[?LastModified<=`2023-08-15`].{Key: Key}' --output text > objects.txt
-        while read -r object; do
-            aws s3api delete-object --bucket everyday-story-backup --key "$object"
-        done < objects.txt
-
-    - name: Delete everyday-story-backup bucket objects older than 7 days, and then emtpy s3 bucket folder
-      run: |
-        
-        aws s3api list-objects-v2 --bucket everyday-story-backup --query 'Contents[?LastModified<=`2023-08-16`].{Key: Key}' --output text > objects.txt
-        while read -r object; do
-            aws s3api delete-object --bucket everyday-story-backup --key "$object"
-        done < objects.txt
-        
-#        aws s3api list-objects-v2 --bucket everyday-story-backup --output json > objects_no_size.json
-#        jq -r '.Contents[] | select(.Size == 0) | .Key' objects_no_size.json > empty_folders.txt
-#        while read -r folder; do
-#            aws s3 rm "s3://everyday-story-backup/$folder"
-#        done < empty_folders.txt
-
-
-
-
 
 
 
