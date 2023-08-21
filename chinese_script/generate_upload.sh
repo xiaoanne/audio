@@ -16,6 +16,7 @@ category="古蜀国密码"
 year=$(date +'%Y')
 day_of_year=$(date +'%j')
 task_time=$(date +'%H:%M:%S')
+i=79
 
 # ====================Need to update when adding another language==================
 # Generate index value
@@ -56,10 +57,15 @@ while [ "${#chunks[${#chunks[@]}-1]}" -gt "$max_text_length" ]; do
 done
 
 # Process each chunk and synthesize speech
-for chunk in "${chunks[@]}"; do
-    aws polly synthesize-speech --text "$chunk" --output-format mp3 --voice-id Zhiyu --sample-rate $sample_rate "${local_prefix}/${s3_folder}/${index_value}_古蜀国密码_$(date +'%H:%M:%S').mp3"
-done
+#for chunk in "${chunks[@]}"; do
+#    aws polly synthesize-speech --text "$chunk" --output-format mp3 --voice-id Zhiyu --sample-rate $sample_rate "${local_prefix}/${s3_folder}/${index_value}_古蜀国密码_$(date +'%H:%M:%S').mp3"
+#    i = i+1
+#done
 
+for chunk in "${chunks[@]}"; do
+    aws polly synthesize-speech --text "$chunk" --output-format mp3 --voice-id Zhiyu --sample-rate $sample_rate "${local_prefix}/${s3_folder}/古蜀国密码_$i.mp3"
+    ((i++))
+done
 
 
 # Upload books, index file, mp3 audio and metadata json files into s3 bucket
