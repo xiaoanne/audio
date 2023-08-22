@@ -9,14 +9,14 @@ sample_rate=24000
 title_chinese=$(head -n 1 "$file_path")
 #title_english=$(sed -n '2p' "$file_path")
 # ====================Need to update when adding another language==================
-story_chinese=$(sed -n '3,$p' "$file_path" | tr -d '[:space:]' | tr -d '\n')
+story_chinese=$(sed -n '2,$p' "$file_path" | tr -d '[:space:]' | tr -d '\n')
 #story_english=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code en --query 'TranslatedText' --output text)
 #story_french=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
 category="古蜀国密码"
 year=$(date +'%Y')
 day_of_year=$(date +'%j')
 task_time=$(date +'%H:%M:%S')
-i=232
+i=240
 
 # ====================Need to update when adding another language==================
 # Generate index value
