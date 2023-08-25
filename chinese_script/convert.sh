@@ -10,14 +10,26 @@ title_chinese=$(head -n 1 "$file_path")
 story_chinese=$(sed -n '2,$p' "$file_path" | tr -d '[:space:]' | tr -d '\n')
 chapter=42
 
-aws polly start-speech-synthesis-task \
+# Start the speech synthesis task
+task_id=$(aws polly start-speech-synthesis-task \
   --region ap-southeast-2 \
   --endpoint-url "https://polly.ap-southeast-2.amazonaws.com/" \
   --output-format mp3 \
   --output-s3-bucket-name "${s3_bucket}" \
   --output-s3-key-prefix "${s3_folder}/${chapter}" \
   --voice-id Zhiyu \
-  --text "$story_chinese"
+  --text "$story_chinese" \
+  --query 'SynthesisTask.TaskId' --output text)
+
+echo "Speech synthesis task started with ID: $task_id"
+
+# Wait for the task to complete
+aws polly wait speech-synthesis-task-completed --task-id "$task_id"
+
+# Retrieve the latest MP3 file after task completion
+latest_mp3=$(aws s3api list-objects --bucket "$s3_bucket" --prefix "${s3_folder}/${chapter}" --query 'Contents | sort_by(@, &LastModified) | [-1].Key' --output text)
+echo "The latest MP3 file after task completion is: $latest_mp3"
+
 
 #sleep 60
 #latest_object=$(aws s3api list-objects --bucket "$s3_bucket" --prefix "${s3_folder}/" --query 'Contents | sort_by(@, &LastModified) | [-1].Key' --output text)
