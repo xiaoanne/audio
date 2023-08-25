@@ -71,7 +71,6 @@ aws polly start-speech-synthesis-task \
 aws s3api list-objects-v2 --bucket "$s3_bucket" --query "sort_by(Contents, &LastModified) | [-1].Key" --output text
 
 
-
 #max_text_length=3000  # Adjust this value based on the maximum allowed text length
 #chunks=( "${text}" )  # Initialize an array with the full text
 
