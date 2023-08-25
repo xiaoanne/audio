@@ -4,6 +4,7 @@
 bucket_name='everyday-story'
 file_path="./chinese_script/story_original.txt"
 local_prefix="./downloads"
+s3_bucket="everyday-story"
 s3_folder="gushuguomima"
 sample_rate=24000
 title_chinese=$(head -n 1 "$file_path")
@@ -67,6 +68,7 @@ aws polly start-speech-synthesis-task \
   --voice-id Zhiyu \
   --text "$story_chinese"
 
+aws s3api list-objects-v2 --bucket "$s3_bucket" --query "sort_by(Contents, &LastModified) | [-1].Key" --output text
 
 
 
