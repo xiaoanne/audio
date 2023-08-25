@@ -4,7 +4,7 @@
 bucket_name='everyday-story'
 file_path="./chinese_script/story_original.txt"
 local_prefix="./downloads"
-s3_folder="古蜀国密码1"
+s3_folder="gushuguomima"
 sample_rate=24000
 title_chinese=$(head -n 1 "$file_path")
 #title_english=$(sed -n '2p' "$file_path")
