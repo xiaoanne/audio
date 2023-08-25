@@ -68,6 +68,8 @@ aws polly start-speech-synthesis-task \
   --text "$story_chinese"
 
 
+
+
 #max_text_length=3000  # Adjust this value based on the maximum allowed text length
 #chunks=( "${text}" )  # Initialize an array with the full text
 
