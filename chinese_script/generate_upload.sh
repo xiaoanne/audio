@@ -90,13 +90,13 @@ aws polly start-speech-synthesis-task \
 
 
 # Upload books, index file, mp3 audio and metadata json files into s3 bucket
-upload_files() {
-    local local_prefix="$1" # Get the local prefix from the function argument
-
-    echo "Now uploading mp3 files."
-    for type in "${story_types[@]}"; do
-        echo "Now uploading ${type} mp3 files."
-        aws s3 cp "${local_prefix}/${s3_folder}/" "s3://everyday-story/${s3_folder}/" --recursive
-    done
-}
-upload_files "${local_prefix}"
+#upload_files() {
+#    local local_prefix="$1" # Get the local prefix from the function argument
+#
+#    echo "Now uploading mp3 files."
+#    for type in "${story_types[@]}"; do
+#        echo "Now uploading ${type} mp3 files."
+#        aws s3 cp "${local_prefix}/${s3_folder}/" "s3://everyday-story/${s3_folder}/" --recursive
+#    done
+#}
+#upload_files "${local_prefix}"
