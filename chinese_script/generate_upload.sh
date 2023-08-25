@@ -16,7 +16,8 @@ category="古蜀国密码"
 year=$(date +'%Y')
 day_of_year=$(date +'%j')
 task_time=$(date +'%H:%M:%S')
-i=530
+#i=539
+chapter=$("古蜀国密码_chapter"42)
 
 # ====================Need to update when adding another language==================
 # Generate index value
@@ -45,16 +46,24 @@ generate_speeches() {
 #    aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate $sample_rate "${local_prefix}/${s3_folder}/${index_value}_english_version_${title_chinese}.mp3"
 #    aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate $sample_rate "${local_prefix}/${s3_folder}/${index_value}_french_version_${title_chinese}.mp3"
 }
-generate_speeches
-text=$story_chinese
-max_text_length=2500  # Adjust this value based on the maximum allowed text length
-chunks=( "${text}" )  # Initialize an array with the full text
+#generate_speeches
+#text=$story_chinese
+
+aws polly synthesize-speech \
+  --output-format mp3 \
+  --voice-id Zhiyu \
+  --text "$story_chinese" \
+  --sample-rate $sample_rate \
+  s3://everyday-story/${s3_folder}/"$chapter".mp3
+
+#max_text_length=3000  # Adjust this value based on the maximum allowed text length
+#chunks=( "${text}" )  # Initialize an array with the full text
 
 # Split the text into chunks
-while [ "${#chunks[${#chunks[@]}-1]}" -gt "$max_text_length" ]; do
-    chunks+=("${chunks[${#chunks[@]}-1]:$max_text_length}")
-    chunks[${#chunks[@]}-2]="${chunks[${#chunks[@]}-2]:0:$max_text_length}"
-done
+#while [ "${#chunks[${#chunks[@]}-1]}" -gt "$max_text_length" ]; do
+#    chunks+=("${chunks[${#chunks[@]}-1]:$max_text_length}")
+#    chunks[${#chunks[@]}-2]="${chunks[${#chunks[@]}-2]:0:$max_text_length}"
+#done
 
 # Process each chunk and synthesize speech
 #for chunk in "${chunks[@]}"; do
@@ -62,10 +71,10 @@ done
 #    i = i+1
 #done
 
-for chunk in "${chunks[@]}"; do
-    aws polly synthesize-speech --text "$chunk" --output-format mp3 --voice-id Zhiyu --sample-rate $sample_rate "${local_prefix}/${s3_folder}/古蜀国密码_$i.mp3"
-    ((i++))
-done
+#for chunk in "${chunks[@]}"; do
+#    aws polly synthesize-speech --text "$chunk" --output-format mp3 --voice-id Zhiyu --sample-rate $sample_rate "${local_prefix}/${s3_folder}/古蜀国密码_$i.mp3"
+#    ((i++))
+#done
 
 
 # Upload books, index file, mp3 audio and metadata json files into s3 bucket
