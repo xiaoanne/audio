@@ -16,7 +16,7 @@ category="古蜀国密码"
 year=$(date +'%Y')
 day_of_year=$(date +'%j')
 task_time=$(date +'%H:%M:%S')
-i=381
+i=388
 
 # ====================Need to update when adding another language==================
 # Generate index value
