@@ -30,13 +30,8 @@ aws polly wait speech-synthesis-task-completed --task-id "$task_id"
 latest_mp3=$(aws s3api list-objects --bucket "$s3_bucket" --prefix "${s3_folder}/${chapter}" --query 'Contents | sort_by(@, &LastModified) | [-1].Key' --output text)
 echo "The latest MP3 file after task completion is: $latest_mp3"
 
-
-#sleep 60
-#latest_object=$(aws s3api list-objects --bucket "$s3_bucket" --prefix "${s3_folder}/" --query 'Contents | sort_by(@, &LastModified) | [-1].Key' --output text)
-#echo "The latest object in the ${s3_folder} folder is: $latest_object"
-
 # Copy the object with the new name
-#aws s3 cp "s3://${s3_bucket}/${latest_object}" "s3://${s3_bucket}/${s3_folder}/${chapter}.mp3"
+aws s3 cp "s3://${s3_bucket}/${s3_folder}/.mp3" "s3://${s3_bucket}/${s3_folder}/${chapter}.mp3"
 
 # Delete the original object
 #aws s3 rm "s3://${s3_bucket}/${latest_object}"
