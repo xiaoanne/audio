@@ -49,12 +49,24 @@ generate_speeches() {
 #generate_speeches
 #text=$story_chinese
 
-aws polly synthesize-speech \
+#aws polly synthesize-speech \
+#  --output-format mp3 \
+#  --voice-id Zhiyu \
+#  --text "$story_chinese" \
+#  --sample-rate $sample_rate \
+#  s3://everyday-story/${s3_folder}/"$chapter".mp3
+
+
+
+aws polly start-speech-synthesis-task \
+  --region us-east-2 \
+  --endpoint-url "https://polly.us-east-2.amazonaws.com/" \
   --output-format mp3 \
+  --output-s3-bucket-name everyday-story \
+  --output-s3-key-prefix ${s3_folder}/"$chapter" \
   --voice-id Zhiyu \
-  --text "$story_chinese" \
-  --sample-rate $sample_rate \
-  s3://everyday-story/${s3_folder}/"$chapter".mp3
+  --text ./story_original.txt
+
 
 #max_text_length=3000  # Adjust this value based on the maximum allowed text length
 #chunks=( "${text}" )  # Initialize an array with the full text
