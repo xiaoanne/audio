@@ -59,8 +59,8 @@ generate_speeches() {
 
 
 aws polly start-speech-synthesis-task \
-  --region us-east-2 \
-  --endpoint-url "https://polly.us-east-2.amazonaws.com/" \
+  --region ap-southeast-2 \
+  --endpoint-url "https://polly.ap-southeast-2.amazonaws.com/" \
   --output-format mp3 \
   --output-s3-bucket-name everyday-story \
   --output-s3-key-prefix ${s3_folder}/"$chapter" \
