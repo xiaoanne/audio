@@ -62,8 +62,6 @@ aws polly start-speech-synthesis-task \
   --region ap-southeast-2 \
   --endpoint-url "https://polly.ap-southeast-2.amazonaws.com/" \
   --output-format mp3 \
-  --Engine neural \
-  --LanguageCode cmn-CN \
   --output-s3-bucket-name everyday-story \
   --output-s3-key-prefix ${s3_folder}/"$chapter".mp3 \
   --voice-id Zhiyu \
