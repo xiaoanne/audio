@@ -68,6 +68,17 @@ aws polly start-speech-synthesis-task \
   --voice-id Zhiyu \
   --text "$story_chinese"
 
+# Get the list of objects in the specified folder, sorted by last modified time
+latest_object=$(aws s3api list-objects-v2 \
+  --bucket "$s3_bucket" \
+  --prefix "$s3_folder" \
+  --query "sort_by(Contents, &LastModified) | [-1].Key" \
+  --output text
+)
+
+echo "The latest object in the folder is: $latest_object"
+
+
 aws s3api list-objects-v2 --bucket "$s3_bucket" --query "sort_by(Contents, &LastModified) | [-1].Key" --output text
 
 
