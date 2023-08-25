@@ -14,8 +14,8 @@ aws polly start-speech-synthesis-task \
   --region ap-southeast-2 \
   --endpoint-url "https://polly.ap-southeast-2.amazonaws.com/" \
   --output-format mp3 \
-  --output-s3-bucket-name everyday-story \
-  --output-s3-key-prefix ${s3_folder} \
+  --output-s3-bucket-name ${s3_bucket} \
+  --output-s3-key-prefix ${s3_folder}/ \
   --voice-id Zhiyu \
   --text "$story_chinese"
 
