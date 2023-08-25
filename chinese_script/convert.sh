@@ -14,15 +14,14 @@ aws polly start-speech-synthesis-task \
   --region ap-southeast-2 \
   --endpoint-url "https://polly.ap-southeast-2.amazonaws.com/" \
   --output-format mp3 \
-  --output-s3-bucket-name ${s3_bucket} \
-  --output-s3-key-prefix ${s3_folder}/ \
+  --output-s3-bucket-name "${s3_bucket}" \
+  --output-s3-key-prefix "${s3_folder}/${chapter}" \
   --voice-id Zhiyu \
   --text "$story_chinese"
 
-# Get the list of objects in the specified folder, sorted by last modified time
-latest_object=$(aws s3api list-objects --bucket ${s3_bucket} --prefix ${s3_folder}/ --query 'Contents | sort_by(@, &LastModified) | [-1].Key' --output text)
-echo "Latest object name: $latest_object"
-
+#sleep 60
+#latest_object=$(aws s3api list-objects --bucket "$s3_bucket" --prefix "${s3_folder}/" --query 'Contents | sort_by(@, &LastModified) | [-1].Key' --output text)
+#echo "The latest object in the ${s3_folder} folder is: $latest_object"
 
 # Copy the object with the new name
 #aws s3 cp "s3://${s3_bucket}/${latest_object}" "s3://${s3_bucket}/${s3_folder}/${chapter}.mp3"
