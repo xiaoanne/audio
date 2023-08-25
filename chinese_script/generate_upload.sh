@@ -76,10 +76,13 @@ latest_object=$(aws s3api list-objects-v2 \
   --output text
 )
 
-echo "The latest object in the folder is: $latest_object"
+echo "The latest object in the $s3_folder folder is: $latest_object"
 
+# Copy the object with the new name
+aws s3 cp "s3://${s3_bucket}/${latest_object}" "s3://${s3_bucket}/${chapter}.mp3"
 
-aws s3api list-objects-v2 --bucket "$s3_bucket" --query "sort_by(Contents, &LastModified) | [-1].Key" --output text
+# Delete the original object
+aws s3 rm "s3://${s3_bucket}/${latest_object}"
 
 
 #max_text_length=3000  # Adjust this value based on the maximum allowed text length
