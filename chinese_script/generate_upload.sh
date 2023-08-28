@@ -80,9 +80,10 @@ echo "The latest object in the $s3_folder folder is: $latest_object"
 
 # Copy the object with the new name
 aws s3 cp "s3://${s3_bucket}/${latest_object}" "s3://${s3_bucket}/${s3_folder}/${chapter}.mp3"
+sleep 60
 
 # Delete the original object
-aws s3 rm "s3://${s3_bucket}/${latest_object}"
+#aws s3 rm "s3://${s3_bucket}/${latest_object}"
 
 
 #max_text_length=3000  # Adjust this value based on the maximum allowed text length
