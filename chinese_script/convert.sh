@@ -29,6 +29,7 @@ day_of_year=$(date +'%j')
 task_time=$(date +'%H:%M:%S')
 chapter_prefix="gushuguomima_chapter"
 chapter="${chapter_prefix}${chapter_number}"
+new_chapter_name="${category}_第${chapter_number}章"
 
 
 # Generate index value
@@ -67,7 +68,7 @@ latest_object=$(aws s3api list-objects-v2 \
 echo "The latest object in the $s3_folder folder is: $latest_object"
 
 # Copy the object with the new name
-aws s3 cp "s3://${s3_bucket}/${latest_object}" "s3://${s3_bucket}/${s3_folder}/${chapter}.mp3"
+aws s3 cp "s3://${s3_bucket}/${latest_object}" "s3://${s3_bucket}/${s3_folder}/${new_chapter_name}.mp3"
 
 # Delete the original object
 aws s3 rm "s3://${s3_bucket}/${latest_object}"
