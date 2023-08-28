@@ -36,4 +36,4 @@ jobs:
     - name: Generate speeches and upload to s3
       run:
         ./chinese_script/generate_upload.sh
-        aws s3 rm "s3://everyday-story/gushuguomima/.mp3"
+#        aws s3 rm "s3://everyday-story/gushuguomima/.mp3"
