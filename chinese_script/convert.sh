@@ -1,6 +1,6 @@
 #!/bin/bash
 
-end_string="第四六章"
+end_string="第四十六章"
 start_string="第四十五章"
 chapter_number=45
 
