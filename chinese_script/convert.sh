@@ -1,22 +1,6 @@
 #!/bin/bash
 
 
-end_string="第四十四章"
-start_string="第四十三章"
-chapter_number=43
-
-input_file="./chinese_script/gu.txt"
-story_original_test="./chinese_script/story_original_test.txt"
-output_file="./chinese_script/story_original.txt"
-
-# Use sed to extract content between start and end strings
-sed -n "/$start_string/,/$end_string/p" $input_file > $story_original_test
-
-# Remove lines 2 to 5 and the last line using sed
-sed '2,5d;$d' "story_original_test.txt" > $output_file
-
-rm $story_original_test
-
 # Common variable declarations
 file_path="./chinese_script/story_original.txt"
 local_prefix="./downloads"
@@ -29,6 +13,7 @@ category="古蜀国密码"
 year=$(date +'%Y')
 day_of_year=$(date +'%j')
 task_time=$(date +'%H:%M:%S')
+chapter_number=43
 chapter_prefix="gushuguomima_chapter"
 chapter="${chapter_prefix}${chapter_number}"
 new_chapter_name="${category}_第${chapter_number}章"
