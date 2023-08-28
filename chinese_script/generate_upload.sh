@@ -18,7 +18,10 @@ year=$(date +'%Y')
 day_of_year=$(date +'%j')
 task_time=$(date +'%H:%M:%S')
 #i=539
-chapter=$("古蜀国密码_chapter"+42)
+chapter_prefix="古蜀国密码_chapter"
+chapter_number=42
+chapter="${chapter_prefix}${chapter_number}"
+
 
 # ====================Need to update when adding another language==================
 # Generate index value
@@ -64,7 +67,7 @@ aws polly start-speech-synthesis-task \
   --endpoint-url "https://polly.ap-southeast-2.amazonaws.com/" \
   --output-format mp3 \
   --output-s3-bucket-name everyday-story \
-  --output-s3-key-prefix ${s3_folder} \
+  --output-s3-key-prefix ${s3_folder}/${chapter} \
   --voice-id Zhiyu \
   --text "$story_chinese"
 
