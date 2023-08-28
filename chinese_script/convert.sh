@@ -1,7 +1,8 @@
 #!/bin/bash
 
-start_string="第四十二章"
-end_string="第四十三章"
+start_string="第四十三章"
+end_string="第四十四章"
+chapter_number=43
 
 input_file="gu.txt"
 output_file="story_original.txt"
@@ -27,7 +28,6 @@ year=$(date +'%Y')
 day_of_year=$(date +'%j')
 task_time=$(date +'%H:%M:%S')
 chapter_prefix="gushuguomima_chapter"
-chapter_number=42
 chapter="${chapter_prefix}${chapter_number}"
 
 
