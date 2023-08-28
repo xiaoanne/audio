@@ -18,7 +18,7 @@ year=$(date +'%Y')
 day_of_year=$(date +'%j')
 task_time=$(date +'%H:%M:%S')
 #i=539
-chapter=$("古蜀国密码_chapter"42)
+chapter=$("古蜀国密码_chapter"+42)
 
 # ====================Need to update when adding another language==================
 # Generate index value
