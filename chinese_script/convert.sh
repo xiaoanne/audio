@@ -1,9 +1,9 @@
 #!/bin/bash
 
 
-end_string="第四十九章"
-start_string="第四十八章"
-chapter_number=48
+end_string="第五十章"
+start_string="第四十九章"
+chapter_number=49
 
 input_file="gu.txt"
 output_file="story_original.txt"
