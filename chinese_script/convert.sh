@@ -35,4 +35,4 @@ echo "Now copying to chapter mp3 file"
 aws s3 cp "s3://${s3_bucket}/${s3_folder}/.mp3" "s3://${s3_bucket}/${s3_folder}/${chapter}.mp3"
 
 # Delete the original object
-aws s3 rm "s3://${s3_bucket}/${s3_folder}/.mp3"
+#aws s3 rm "s3://${s3_bucket}/${s3_folder}/.mp3"
