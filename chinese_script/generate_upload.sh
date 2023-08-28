@@ -18,7 +18,7 @@ year=$(date +'%Y')
 day_of_year=$(date +'%j')
 task_time=$(date +'%H:%M:%S')
 #i=539
-chapter_prefix="古蜀国密码_chapter"
+chapter_prefix="gushuguomima_chapter"
 chapter_number=42
 chapter="${chapter_prefix}${chapter_number}"
 
