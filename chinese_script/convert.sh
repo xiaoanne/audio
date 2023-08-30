@@ -2,7 +2,7 @@
 
 
 # Common variable declarations
-file_path="./chinese_script/story_original_47-2.txt"
+file_path="./chinese_script/story_original_47-3.txt"
 local_prefix="./downloads"
 s3_bucket="everyday-story"
 s3_folder="gushuguomima"
