@@ -14,7 +14,7 @@ aws translate translate-text --text "你好，这是一个测试" --source-langu
 aws s3 sync s3://everyday-story .
 
 cd /Users/anne/Downloads/ximalaya/古蜀国密码/古蜀国密码
-aws s3 sync s3://everyday-story/古蜀国密码1 .
+aws s3 sync s3://everyday-story/gushuguomima .
 ls 古蜀国密码_5*
 
 #Not working
