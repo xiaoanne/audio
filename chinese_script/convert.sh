@@ -2,7 +2,8 @@
 
 
 # Common variable declarations
-file_path="./chinese_script/story_original_47-3.txt"
+file_path="./chinese_script/story_original_48-1.txt"
+chapter_number="48-1"
 local_prefix="./downloads"
 s3_bucket="everyday-story"
 s3_folder="gushuguomima"
@@ -13,7 +14,6 @@ category="古蜀国密码"
 year=$(date +'%Y')
 day_of_year=$(date +'%j')
 task_time=$(date +'%H:%M:%S')
-chapter_number="47-3"
 chapter_prefix="gushuguomima_chapter"
 chapter="${chapter_prefix}${chapter_number}"
 new_chapter_name="${category}_第${chapter_number}章"
