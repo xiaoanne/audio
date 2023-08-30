@@ -2,7 +2,7 @@
 
 #start_string="第四十七章"
 start_string="三天过去，涂山侯人还是没来"
-end_string="以示坦诚之意"
+end_string="对付落头族其实非常简单！"
 #end_string="小狼王作声不得！"
 
 input_file="gu.txt"
