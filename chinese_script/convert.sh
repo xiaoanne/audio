@@ -2,10 +2,10 @@
 
 
 # Common variable declarations
-file_path="./chinese_script/story_original.txt"
-#file_path="./chinese_script/story_original_58-3.txt"
-chapter_number="60"
-#chapter_number="58-3"
+#file_path="./chinese_script/story_original.txt"
+file_path="./chinese_script/story_original_61-1.txt"
+#chapter_number="60"
+chapter_number="61-1"
 local_prefix="./downloads"
 s3_bucket="everyday-story"
 s3_folder="gushuguomima"
