@@ -1,8 +1,8 @@
 #!/bin/bash
 
-start_string="第五十九章"
+start_string="第六十章"
 #start_string="有保密的必要吗"
-end_string="第六十章"
+end_string="第六十一章"
 #end_string="也许内在的病毒会更加速爆发了"
 
 input_file="gu.txt"
