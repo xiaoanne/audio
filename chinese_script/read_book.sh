@@ -1,14 +1,14 @@
 #!/bin/bash
 
-start_string="第六十章"
-#start_string="有保密的必要吗"
-end_string="第六十一章"
-#end_string="也许内在的病毒会更加速爆发了"
+start_string="第七十五章"
+#start_string="禹京坐下去"
+end_string="第七十六章"
+#end_string="她愤怒得出奇"
 
 input_file="gu.txt"
 #input_file="story_original.txt"
 output_file="story_original.txt"
-#output_file="story_original_58-3.txt"
+#output_file="story_original_63-1.txt"
 
 # Use sed to extract content between start and end strings
 sed -n "/$start_string/,/$end_string/p" $input_file > story_original_test.txt
