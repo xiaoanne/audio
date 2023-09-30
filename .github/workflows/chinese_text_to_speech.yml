@@ -9,9 +9,9 @@ jobs:
   run-script:
     name: Chinese Text to Speech
     runs-on: ubuntu-latest
-#    concurrency:
-#      group: ${{ github.ref }}
-#      cancel-in-progress: true
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
 
     steps:
     - name: Checkout Repository
@@ -31,7 +31,7 @@ jobs:
         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
         aws configure set default.region $AWS_REGION
-        chmod +x ./chinese_script/convert.sh
+        chmod +x ./chinese_script/cy.sh
 
     - name: Generate speeches and upload to s3
-      run: ./chinese_script/convert.sh
+      run: ./chinese_script/cy.sh
