@@ -80,5 +80,5 @@ upload_files() {
 # Call the function
 generate_books
 generate_audio
-# upload_files
+upload_files
 
