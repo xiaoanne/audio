@@ -63,7 +63,7 @@ generate_books() {
 
 
 generate_audio() {
-    local audio_path="${local_prefix}/books/audio/"
+    local audio_path="${local_prefix}/books/audio"
     aws polly synthesize-speech --text "The story of ${title_english}, ${English}" --engine neural --output-format mp3 --voice-id Matthew --sample-rate $sample_rate "${audio_path}/English_${title_chinese}.mp3"
     aws polly synthesize-speech --text "The story of ${title_english}, ${French}" --engine neural --output-format mp3 --voice-id Lea --sample-rate $sample_rate "${audio_path}/French_${title_chinese}.mp3"
     aws polly synthesize-speech --text "The story of ${title_english}, ${Spanish}" --engine neural --output-format mp3 --voice-id Lucia --sample-rate $sample_rate "${audio_path}/Spanish_${title_chinese}.mp3"
