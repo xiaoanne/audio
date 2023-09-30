@@ -32,16 +32,10 @@ jobs:
         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
         aws configure set default.region $AWS_REGION
-        chmod +x ./script/generate_upload.sh
-
-    - name: Backup s3 bucket
-      run: |
-        aws s3 sync s3://everyday-story/books s3://everyday-story-backup/books_$(date +%F)_$(date +%T)
-        aws s3 sync s3://everyday-story/story s3://everyday-story-backup/story_$(date +%F)_$(date +%T)
-        aws s3 sync s3://everyday-story/index.csv s3://everyday-story-backup/index_$(date +%F)_$(date +%T).csv
+        chmod +x ./script/cy.sh
 
     - name: Generate speeches and upload to s3
-      run: ./script/generate_upload.sh
+      run: ./script/cy.sh
 
 #
 #    - name: Delete everyday-story bucket objects older than 30 days, and then emtpy s3 bucket folder
