@@ -20,10 +20,10 @@ declare -a book_languages=("english" "french")
 
 
 # ====================Need to update when adding another language==================
-English=""
-French=""
-Spanish=""
-Arabic=""
+# English=""
+# French=""
+# Spanish=""
+# Arabic=""
 generate_books() {
     English=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code en --query 'TranslatedText' --output text)
     French=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
@@ -37,10 +37,16 @@ generate_books() {
     Korean=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code ko --query 'TranslatedText' --output text)
     Italian=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code it --query 'TranslatedText' --output text)
     Dutch=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code nl --query 'TranslatedText' --output text)
+    Polish=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code pl --query 'TranslatedText' --output text)
+    Danish=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code da --query 'TranslatedText' --output text)
+    Finnish=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fi --query 'TranslatedText' --output text)
+    Norwegian=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code no --query 'TranslatedText' --output text)
+    Swedish=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code sv --query 'TranslatedText' --output text)
+    
     
     
     # Create an array with the story variables
-    stories=("English" "French" "Spanish" "Arabic" "Hindi" "Portuguese" "Japanese" "German" "Canteness" "Korean" "Italian" "Dutch")
+    stories=("English" "French" "Spanish" "Arabic" "Hindi" "Portuguese" "Japanese" "German" "Canteness" "Korean" "Italian" "Dutch" "Polish" "Danish" "Finnish" "Norwegian" "Swedish")
     
     for story_var in "${stories[@]}"; do
         # Use variable indirection to get the value of the current story variable
@@ -70,6 +76,11 @@ generate_audio() {
     aws polly synthesize-speech --text "The story of ${title_english}, ${Korean}" --engine neural --output-format mp3 --voice-id Seoyeon --sample-rate $sample_rate "${audio_path}/Korean_${title_chinese}.mp3"
     aws polly synthesize-speech --text "The story of ${title_english}, ${Italian}" --engine neural --output-format mp3 --voice-id Bianca --sample-rate $sample_rate "${audio_path}/Italian_${title_chinese}.mp3"
     aws polly synthesize-speech --text "The story of ${title_english}, ${Dutch}" --engine neural --output-format mp3 --voice-id Laura --sample-rate $sample_rate "${audio_path}/Dutch_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${Polish}" --engine neural --output-format mp3 --voice-id Ola --sample-rate $sample_rate "${audio_path}/Polish_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${Danish}" --engine neural --output-format mp3 --voice-id Sofie --sample-rate $sample_rate "${audio_path}/Danish_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${Finnish}" --engine neural --output-format mp3 --voice-id Suvi --sample-rate $sample_rate "${audio_path}/Finnish_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${Norwegian}" --engine neural --output-format mp3 --voice-id Ida --sample-rate $sample_rate "${audio_path}/Norwegian_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${Swedish}" --engine neural --output-format mp3 --voice-id Elin --sample-rate $sample_rate "${audio_path}/Swedish_${title_chinese}.mp3"
 
 }
 
