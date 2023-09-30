@@ -13,17 +13,22 @@ echo "${title_chinese}:" "${story_chinese}" > "${local_prefix}/books/story/chine
 echo "${title_chinese}" >> "${local_prefix}/books/book_chinese.txt"
 echo "${story_chinese}" >> "${local_prefix}/books/book_chinese.txt"
 echo "${break_line}" >> "${local_prefix}/books/book_chinese.txt"
+aws polly synthesize-speech --text "投桃报李的故事，${story_chinese}" --output-format mp3 --voice-id Zhiyu --sample-rate "$sample_rate" "${local_prefix}/books/audio/chinese_${title_chinese}.mp3"
 
 # declare -a story_types=("chinese_version" "english_version" "french_version")
 declare -a book_languages=("english" "french")
 
 
 # ====================Need to update when adding another language==================
+English=""
+French=""
+Spanish=""
+Arabic=""
 generate_books() {
-    local English=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code en --query 'TranslatedText' --output text)
-    local French=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
-    local Spanish=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code es --query 'TranslatedText' --output text)
-    local Arabic=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code ar --query 'TranslatedText' --output text)
+    English=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code en --query 'TranslatedText' --output text)
+    French=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
+    Spanish=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code es --query 'TranslatedText' --output text)
+    Arabic=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code ar --query 'TranslatedText' --output text)
     
     
     # Create an array with the story variables
@@ -44,9 +49,12 @@ generate_books() {
 
 
 generate_audio() {
-    
+    local audio_path="${local_prefix}/books/audio/"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${English}" --output-format mp3 --voice-id Matthew --sample-rate $sample_rate "${audio_path}/English_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${French}" --output-format mp3 --voice-id Celine --sample-rate $sample_rate "${audio_path}/French_${title_chinese}.mp3"
 }
 
 # Call the function
 generate_books
+generate_audio
 
