@@ -18,8 +18,8 @@ task_time=$(date +'%H:%M:%S')
 
 # ====================Need to update when adding another language==================
 # Generate index value
-index_value="${category}_${year}_${day_of_year}_${task_time}"
-echo "Index value: ${index_value}"
+# index_value="${category}_${year}_${day_of_year}_${task_time}"
+# echo "Index value: ${index_value}"
 echo "Title value: ${title_chinese}"
 echo "Chinese story: ${story_chinese}"
 echo "English story: ${story_english}"
@@ -27,19 +27,19 @@ echo "French story: ${story_french}"
 
 
 # Download existing books and index.csv, update them later then upload them
-aws s3 sync s3://${bucket_name} downloads --exclude "story/*"
+# aws s3 sync s3://${bucket_name} downloads --exclude "story/*"
 
 
 # ====================Need to update when adding another language==================
 # Declare the arrays for function of upload_files
-languages=("chinese" "english" "french")
-declare -a book_languages=("chinese" "english" "french")
-declare -a story_types=("chinese_version" "english_version" "french_version")
+# languages=("chinese" "english" "french")
+# declare -a book_languages=("chinese" "english" "french")
+# declare -a story_types=("chinese_version" "english_version" "french_version")
 
-# ====================Need to update when adding another language==================
-# Declare the arrays and other variables outside of the function generate_books
-titles=("$title_chinese" "$title_english" "$title_english")
-stories=("$story_chinese" "$story_english" "$story_french")
+# # ====================Need to update when adding another language==================
+# # Declare the arrays and other variables outside of the function generate_books
+# titles=("$title_chinese" "$title_english" "$title_english")
+# stories=("$story_chinese" "$story_english" "$story_french")
 
 
 
@@ -60,7 +60,7 @@ generate_books() {
 #        echo "The title is: $title"; echo "The story content is: $story"; echo "$break_line" >> "${local_prefix}/books/${lang}_chengyu.txt"
     done
 }
-generate_books "${local_prefix}"
+# generate_books "${local_prefix}"
 
 
 
@@ -79,7 +79,7 @@ create_json_file() {
     echo "$meta_content" > "${local_prefix}/story/${index_value}_metadata_${title_chinese}.json"
     echo "Generated the metadata json file."
 }
-create_json_file
+# create_json_file
 
 
 # ====================Need to update when adding another language==================
@@ -89,7 +89,7 @@ generate_speeches() {
     aws polly synthesize-speech --text "$story_english" --output-format mp3 --voice-id Matthew --sample-rate $sample_rate "${local_prefix}/story/${index_value}_english_version_${title_chinese}.mp3"
     aws polly synthesize-speech --text "$story_french" --output-format mp3 --voice-id Celine --sample-rate $sample_rate "${local_prefix}/story/${index_value}_french_version_${title_chinese}.mp3"
 }
-generate_speeches
+# generate_speeches
 
 
 
@@ -121,4 +121,4 @@ upload_files() {
         aws s3api put-object-tagging --bucket $bucket_name --key "story/${index_value}_${type}_${title_chinese}.mp3" --tagging 'TagSet=[{Key=language,Value=chinese}, {Key=scope,Value=成语}]'
     done
 }
-upload_files "${local_prefix}"
+# upload_files "${local_prefix}"
