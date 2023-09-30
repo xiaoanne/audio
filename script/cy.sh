@@ -29,10 +29,18 @@ generate_books() {
     French=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code fr --query 'TranslatedText' --output text)
     Spanish=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code es --query 'TranslatedText' --output text)
     Arabic=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code ar --query 'TranslatedText' --output text)
+    Hindi=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code hi --query 'TranslatedText' --output text)
+    Portuguese=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code pt --query 'TranslatedText' --output text)
+    Japanese=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code ja --query 'TranslatedText' --output text)
+    German=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code de --query 'TranslatedText' --output text)
+    Canteness=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code zh --query 'TranslatedText' --output text)
+    Korean=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code ko --query 'TranslatedText' --output text)
+    Italian=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code it --query 'TranslatedText' --output text)
+    Dutch=$(aws translate translate-text --text "$story_chinese" --source-language-code zh --target-language-code nl --query 'TranslatedText' --output text)
     
     
     # Create an array with the story variables
-    stories=("English" "French" "Spanish" "Arabic")
+    stories=("English" "French" "Spanish" "Arabic" "Hindi" "Portuguese" "Japanese" "German" "Canteness" "Korean" "Italian" "Dutch")
     
     for story_var in "${stories[@]}"; do
         # Use variable indirection to get the value of the current story variable
@@ -54,8 +62,14 @@ generate_audio() {
     aws polly synthesize-speech --text "The story of ${title_english}, ${French}" --engine neural --output-format mp3 --voice-id Lea --sample-rate $sample_rate "${audio_path}/French_${title_chinese}.mp3"
     aws polly synthesize-speech --text "The story of ${title_english}, ${Spanish}" --engine neural --output-format mp3 --voice-id Lucia --sample-rate $sample_rate "${audio_path}/Spanish_${title_chinese}.mp3"
     aws polly synthesize-speech --text "The story of ${title_english}, ${Arabic}" --engine neural --output-format mp3 --voice-id Hala --sample-rate $sample_rate "${audio_path}/Arabic_${title_chinese}.mp3"
-
-    # aws polly synthesize-speech --text "The story of ${title_english}, ${French}" --output-format mp3 --voice-id Celine --sample-rate $sample_rate "${audio_path}/French_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${Hindi}" --engine neural --output-format mp3 --voice-id Kajal --sample-rate $sample_rate "${audio_path}/Hindi_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${Portuguese}" --engine neural --output-format mp3 --voice-id Ines --sample-rate $sample_rate "${audio_path}/Portuguese_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${Japanese}" --engine neural --output-format mp3 --voice-id Kazuha --sample-rate $sample_rate "${audio_path}/Japanese_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${German}" --engine neural --output-format mp3 --voice-id Vicki --sample-rate $sample_rate "${audio_path}/German_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${Canteness}" --engine neural --output-format mp3 --voice-id Hiujin --sample-rate $sample_rate "${audio_path}/Canteness_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${Korean}" --engine neural --output-format mp3 --voice-id Seoyeon --sample-rate $sample_rate "${audio_path}/Korean_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${Italian}" --engine neural --output-format mp3 --voice-id Bianca --sample-rate $sample_rate "${audio_path}/Italian_${title_chinese}.mp3"
+    aws polly synthesize-speech --text "The story of ${title_english}, ${Dutch}" --engine neural --output-format mp3 --voice-id Laura --sample-rate $sample_rate "${audio_path}/Dutch_${title_chinese}.mp3"
 
 }
 
@@ -66,5 +80,5 @@ upload_files() {
 # Call the function
 generate_books
 generate_audio
-upload_files
+# upload_files
 
